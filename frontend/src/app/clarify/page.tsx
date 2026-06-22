@@ -181,7 +181,7 @@ export default function ClarifyPage() {
                 <div className="space-y-4">
                   <h3 className="text-sm font-semibold text-text">Auto-Assumptions</h3>
                   <ul className="list-disc pl-5 space-y-1">
-                    {result.auto_assumptions.map((assumption: str, idx: number) => (
+                    {result.auto_assumptions.map((assumption: string, idx: number) => (
                       <li key={idx} className="text-sm text-text-secondary">
                         {assumption}
                       </li>
