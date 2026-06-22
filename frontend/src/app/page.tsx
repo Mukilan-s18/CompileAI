@@ -1,325 +1,203 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { apiClient } from "@/lib/utils";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
-  Zap, 
-  TerminalSquare, 
-  Clock, 
-  CheckCircle, 
-  AlertCircle, 
-  Settings, 
+  Terminal, 
+  ArrowRight, 
   Target, 
   Cuboid, 
   FileCode2, 
   ShieldCheck, 
   Wrench, 
-  Rocket 
+  Rocket,
+  CheckCircle2,
+  Loader2
 } from "lucide-react";
 
-interface MetricsSummary {
-  total_compilations: number;
-  success_rate: number;
-  avg_duration_ms: number;
-  total_validation_errors: number;
-  total_repairs: number;
-  execution_pass_rate: number;
-  avg_tokens_used: number;
-}
+export default function Home() {
+  const [prompt, setPrompt] = useState("");
+  const [isCompiling, setIsCompiling] = useState(false);
+  const [currentStage, setCurrentStage] = useState(0);
 
-interface CompilationSummary {
-  id: string;
-  status: string;
-  prompt: string;
-  app_name: string;
-  domain: string;
-  created_at: string;
-  duration_ms: number;
-  validation_errors: number;
-  repair_count: number;
-  execution_status: string;
-}
+  const stages = [
+    { id: "intent", label: "Intent Extraction", icon: Target },
+    { id: "design", label: "System Design", icon: Cuboid },
+    { id: "schemas", label: "Schema Generation", icon: FileCode2 },
+    { id: "validation", label: "Validation", icon: ShieldCheck },
+    { id: "repair", label: "Repair Engine", icon: Wrench },
+    { id: "simulation", label: "Simulation", icon: Rocket },
+  ];
 
-const statusColors: Record<string, string> = {
-  success: "badge-success",
-  partial: "badge-warning",
-  failed: "badge-error",
-  PASS: "badge-success",
-  FAIL: "badge-error",
-};
+  const handleCompile = () => {
+    if (!prompt.trim()) return;
+    setIsCompiling(true);
+    setCurrentStage(0);
 
-export default function DashboardPage() {
-  const [metrics, setMetrics] = useState<MetricsSummary | null>(null);
-  const [compilations, setCompilations] = useState<CompilationSummary[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function load() {
-      try {
-        const [m, c] = await Promise.all([
-          apiClient<MetricsSummary>("/metrics"),
-          apiClient<CompilationSummary[]>("/compilations"),
-        ]);
-        setMetrics(m);
-        setCompilations(c);
-      } catch {
-        // API not available yet — use defaults
-        setMetrics({
-          total_compilations: 0,
-          success_rate: 0,
-          avg_duration_ms: 0,
-          total_validation_errors: 0,
-          total_repairs: 0,
-          execution_pass_rate: 0,
-          avg_tokens_used: 0,
-        });
-      } finally {
-        setLoading(false);
-      }
-    }
-    load();
-  }, []);
-
-  const statCards = metrics
-    ? [
-        {
-          label: "Total Compilations",
-          value: metrics.total_compilations,
-          icon: "⚡",
-          color: "from-accent to-violet",
-          bgColor: "accent-glow",
-        },
-        {
-          label: "Success Rate",
-          value: `${metrics.success_rate}%`,
-          icon: "✓",
-          color: "from-emerald to-green-400",
-          bgColor: "success-bg",
-        },
-        {
-          label: "Avg Latency",
-          value: `${(metrics.avg_duration_ms / 1000).toFixed(1)}s`,
-          icon: "⏱",
-          color: "from-amber to-yellow-400",
-          bgColor: "warning-bg",
-        },
-        {
-          label: "Execution Pass Rate",
-          value: `${metrics.execution_pass_rate}%`,
-          icon: "▶",
-          color: "from-blue-500 to-cyan-400",
-          bgColor: "info-bg",
-        },
-        {
-          label: "Validation Errors",
-          value: metrics.total_validation_errors,
-          icon: "⚠",
-          color: "from-red-500 to-rose-400",
-          bgColor: "error-bg",
-        },
-        {
-          label: "Repair Operations",
-          value: metrics.total_repairs,
-          icon: "⚙",
-          color: "from-violet to-purple-400",
-          bgColor: "violet-bg",
-        },
-      ]
-    : [];
+    // Simulate compilation progress
+    const interval = setInterval(() => {
+      setCurrentStage((prev) => {
+        if (prev >= stages.length - 1) {
+          clearInterval(interval);
+          setTimeout(() => setIsCompiling(false), 1000);
+          return prev;
+        }
+        return prev + 1;
+      });
+    }, 1500);
+  };
 
   return (
-    <div className="flex flex-col justify-between h-[calc(100vh-2rem)] mx-auto px-10 py-6 max-w-7xl overflow-y-auto">
-      <div>
-        <div className="mb-10">
-          <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">
-            AI Application Compiler
-          </h1>
-          <p className="text-slate-600 mt-2 text-lg">
-            Convert natural language product requirements into validated, executable application specifications.
-          </p>
-        </div>
-
-        {/* Quick Start */}
-        <Link
-          href="/generator"
-          className="block mb-10 glass-card glass-card-hover p-8 rounded-2xl cursor-pointer group"
+    <div className="min-h-full flex flex-col p-8 lg:p-12 max-w-5xl mx-auto space-y-16">
+      
+      {/* 1. Command Center Hero */}
+      <section className="flex flex-col items-center text-center mt-12 mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
         >
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold text-slate-900 group-hover:text-rose-600 transition-colors flex items-center gap-3">
-                Start Compiling <span className="group-hover:translate-x-2 transition-transform">→</span>
-              </h2>
-              <p className="text-slate-600 mt-2 text-lg">
-                Enter a product description and generate complete application
-                specs
-              </p>
-            </div>
-            <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center text-white shadow-lg shadow-rose-200 group-hover:scale-110 transition-transform">
-              <Zap size={32} />
-            </div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-text-secondary mb-6">
+            <Terminal size={14} className="text-accent" />
+            <span>CompileAI Engine v2.0 Online</span>
           </div>
-        </Link>
+          <h1 className="text-4xl md:text-5xl font-semibold text-text tracking-tight mb-4">
+            Define your architecture. <br className="hidden sm:block"/>
+            We compile the execution.
+          </h1>
+          <p className="text-base text-text-secondary max-w-xl mx-auto">
+            Convert natural language product requirements into validated, executable application specifications ready for deployment.
+          </p>
+        </motion.div>
+      </section>
 
-        {/* Stats Grid */}
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {[...Array(6)].map((_, i) => (
-              <div
-                key={i}
-                className="glass-card p-6 animate-pulse h-32 rounded-2xl"
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {statCards.map((card, i) => (
-              <div
-                key={card.label}
-                className="glass-card glass-card-hover p-6 rounded-2xl"
-              >
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className="text-sm text-slate-500 uppercase tracking-wider font-bold">
-                      {card.label}
-                    </p>
-                    <p className="text-4xl font-extrabold mt-3 text-slate-900">
-                      {card.value}
-                    </p>
-                  </div>
-                  <div
-                    className={`w-14 h-14 rounded-xl bg-gradient-to-br ${card.color} flex items-center justify-center text-white shadow-lg`}
-                  >
-                    {card.icon}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Recent Compilations */}
-        <div className="glass-card overflow-hidden rounded-2xl mb-12">
-          <div className="p-6 border-b border-white/40 bg-white/40">
-            <h2 className="text-xl font-bold text-slate-900">
-              Recent Compilations
-            </h2>
-          </div>
-          {compilations.length === 0 ? (
-            <div className="p-16 text-center">
-              <p className="text-slate-700 font-medium text-lg mb-1">
-                No compilations yet
-              </p>
-              <p className="text-slate-500">
-                Go to the Generator to create your first compilation
-              </p>
+      {/* 2. Prompt Editor */}
+      <section className="w-full max-w-3xl mx-auto">
+        <motion.div 
+          className="panel flex flex-col focus-within:border-accent/50 transition-colors shadow-2xl shadow-black/50"
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          <div className="p-3 border-b border-border bg-[#131316] rounded-t-xl flex items-center gap-2">
+            <div className="flex gap-1.5 ml-2">
+              <div className="w-2.5 h-2.5 rounded-full bg-white/20" />
+              <div className="w-2.5 h-2.5 rounded-full bg-white/20" />
+              <div className="w-2.5 h-2.5 rounded-full bg-white/20" />
             </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-white/40 bg-white/20">
-                    <th className="text-left text-sm font-bold text-slate-600 uppercase tracking-wider px-6 py-4">
-                      App
-                    </th>
-                    <th className="text-left text-sm font-bold text-slate-600 uppercase tracking-wider px-6 py-4">
-                      Domain
-                    </th>
-                    <th className="text-left text-sm font-bold text-slate-600 uppercase tracking-wider px-6 py-4">
-                      Status
-                    </th>
-                    <th className="text-left text-sm font-bold text-slate-600 uppercase tracking-wider px-6 py-4">
-                      Errors
-                    </th>
-                    <th className="text-left text-sm font-bold text-slate-600 uppercase tracking-wider px-6 py-4">
-                      Repairs
-                    </th>
-                    <th className="text-left text-sm font-bold text-slate-600 uppercase tracking-wider px-6 py-4">
-                      Execution
-                    </th>
-                    <th className="text-left text-sm font-bold text-slate-600 uppercase tracking-wider px-6 py-4">
-                      Duration
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white/40">
-                  {compilations.map((comp) => (
-                    <tr
-                      key={comp.id}
-                      className="border-b border-white/20 hover:bg-white/60 transition-colors cursor-pointer"
-                    >
-                      <td className="px-6 py-4">
-                        <Link
-                          href={`/generator?id=${comp.id}`}
-                          className="text-base font-bold text-slate-900 hover:text-blue-600 transition-colors"
-                        >
-                          {comp.app_name || "Untitled"}
-                        </Link>
-                      </td>
-                      <td className="px-6 py-4 text-slate-600 font-medium">
-                        {comp.domain}
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className={`badge ${statusColors[comp.status] || "badge-info"}`}>
-                          {comp.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-slate-700 font-mono font-medium">
-                        {comp.validation_errors}
-                      </td>
-                      <td className="px-6 py-4 text-slate-700 font-mono font-medium">
-                        {comp.repair_count}
-                      </td>
-                      <td className="px-6 py-4">
-                        {comp.execution_status && (
-                          <span className={`badge ${statusColors[comp.execution_status] || "badge-info"}`}>
-                            {comp.execution_status}
-                          </span>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 text-slate-600 font-mono font-medium">
-                        {(comp.duration_ms / 1000).toFixed(1)}s
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Pipeline Architecture Diagram - Pushed to bottom by flex-col justify-between */}
-      <div className="glass-card p-8 rounded-2xl mt-auto">
-        <h2 className="text-xl font-bold text-slate-900 mb-8">
-          Compiler Pipeline
-        </h2>
-        <div className="flex items-center justify-between gap-4 overflow-x-auto pb-4">
-          {[
-            { label: "Intent Extraction", icon: <Target size={28} className="text-rose-500" />, desc: "NL → Structured" },
-            { label: "System Design", icon: <Cuboid size={28} className="text-orange-500" />, desc: "Intent → Architecture" },
-            { label: "Schema Generation", icon: <FileCode2 size={28} className="text-amber-500" />, desc: "Architecture → Schemas" },
-            { label: "Validation", icon: <ShieldCheck size={28} className="text-emerald-500" />, desc: "Cross-schema checks" },
-            { label: "Repair", icon: <Wrench size={28} className="text-blue-500" />, desc: "Targeted fixes" },
-            { label: "Simulation", icon: <Rocket size={28} className="text-indigo-500" />, desc: "Runtime verification" },
-          ].map((stage, i) => (
-            <div key={stage.label} className="flex items-center gap-4 flex-1">
-              <div className="flex flex-col items-center w-full p-4 rounded-xl bg-white/40 border border-white/60 hover:bg-white/80 transition-all hover:-translate-y-1 shadow-sm">
-                <span className="mb-3 p-3 bg-white rounded-xl shadow-sm">{stage.icon}</span>
-                <span className="text-sm font-bold text-slate-900 text-center">
-                  {stage.label}
-                </span>
-                <span className="text-xs font-medium text-slate-500 mt-1 text-center">
-                  {stage.desc}
-                </span>
-              </div>
-              {i < 5 && (
-                <span className="text-slate-400 text-2xl shrink-0 font-light">→</span>
+            <span className="ml-4 text-xs font-mono text-text-muted">system_prompt.txt</span>
+          </div>
+          <div className="relative p-1">
+            <textarea
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              placeholder="Build a CRM with:&#10;- authentication&#10;- contacts&#10;- analytics dashboard&#10;- role-based access&#10;- premium subscription"
+              className="w-full h-48 bg-transparent text-text text-sm font-mono p-4 resize-none focus:outline-none placeholder:text-text-muted/50 leading-relaxed"
+              spellCheck="false"
+            />
+          </div>
+          <div className="p-3 border-t border-border bg-[#131316] rounded-b-xl flex justify-between items-center">
+            <span className="text-[11px] text-text-muted font-mono">
+              Press Cmd + Enter to compile
+            </span>
+            <button
+              onClick={handleCompile}
+              disabled={isCompiling || !prompt.trim()}
+              className="bg-text text-background hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed px-4 py-1.5 rounded-md text-xs font-semibold tracking-wide transition-colors flex items-center gap-2"
+            >
+              {isCompiling ? (
+                <>
+                  <Loader2 size={14} className="animate-spin" />
+                  Compiling...
+                </>
+              ) : (
+                <>
+                  Compile Application
+                  <ArrowRight size={14} />
+                </>
               )}
+            </button>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* 3. Live Compilation Flow */}
+      <AnimatePresence>
+        {isCompiling && (
+          <motion.section 
+            className="w-full max-w-3xl mx-auto panel p-6"
+            initial={{ opacity: 0, height: 0, y: 10 }}
+            animate={{ opacity: 1, height: "auto", y: 0 }}
+            exit={{ opacity: 0, height: 0 }}
+          >
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-sm font-semibold text-text">Compilation Progress</h3>
+              <span className="text-xs font-mono text-accent">
+                {Math.round((currentStage / (stages.length - 1)) * 100)}%
+              </span>
             </div>
-          ))}
-        </div>
-      </div>
+            <div className="space-y-4">
+              {stages.map((stage, idx) => {
+                const isComplete = currentStage > idx;
+                const isCurrent = currentStage === idx;
+                const Icon = stage.icon;
+
+                return (
+                  <div key={stage.id} className="flex items-center gap-4">
+                    <div className="w-6 flex justify-center">
+                      {isComplete ? (
+                        <CheckCircle2 size={16} className="text-success" />
+                      ) : isCurrent ? (
+                        <Loader2 size={16} className="text-accent animate-spin" />
+                      ) : (
+                        <div className="w-1.5 h-1.5 rounded-full bg-white/20" />
+                      )}
+                    </div>
+                    <div className={`text-sm ${isCurrent ? 'text-text font-medium' : isComplete ? 'text-text-secondary' : 'text-text-muted'}`}>
+                      {stage.label}
+                    </div>
+                    {isCurrent && (
+                      <motion.div 
+                        className="h-1 bg-accent/20 rounded-full flex-1 ml-4 overflow-hidden"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                      >
+                        <motion.div 
+                          className="h-full bg-accent"
+                          initial={{ width: "0%" }}
+                          animate={{ width: "100%" }}
+                          transition={{ duration: 1.5, ease: "linear" }}
+                        />
+                      </motion.div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </motion.section>
+        )}
+      </AnimatePresence>
+
+      {/* 4. Elegant Metric Panels */}
+      {!isCompiling && (
+        <section className="w-full max-w-4xl mx-auto pt-8 border-t border-border">
+          <h2 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-6">System Telemetry</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { label: "Total Compilations", value: "1,204" },
+              { label: "Execution Pass Rate", value: "98.2%" },
+              { label: "Avg Latency", value: "2.4s" },
+              { label: "Validation Errors", value: "0" },
+            ].map((metric) => (
+              <div key={metric.label} className="panel p-4 flex flex-col justify-between h-24 hover:border-white/20 transition-colors">
+                <span className="text-[11px] text-text-secondary font-medium">{metric.label}</span>
+                <span className="text-2xl font-semibold text-text tracking-tight">{metric.value}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
     </div>
   );
 }

@@ -3,66 +3,62 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-
 import { 
   LayoutDashboard, 
-  Zap, 
-  Search, 
-  CheckCircle2, 
+  Terminal, 
+  GitMerge, 
+  ShieldCheck, 
   Wrench, 
   Play, 
-  BarChart3, 
-  CircleDollarSign, 
-  LineChart 
+  BarChart2, 
+  LineChart, 
+  Settings 
 } from "lucide-react";
 
 const navItems = [
-  { label: "Dashboard", href: "/", icon: <LayoutDashboard size={20} /> },
-  { label: "Generator", href: "/generator", icon: <Zap size={20} /> },
-  { label: "Clarify", href: "/clarify", icon: <Search size={20} /> },
-  { label: "Validation", href: "/validation", icon: <CheckCircle2 size={20} /> },
-  { label: "Repair", href: "/repair", icon: <Wrench size={20} /> },
-  { label: "Execution", href: "/execution", icon: <Play size={20} /> },
-  { label: "Benchmarks", href: "/benchmarks", icon: <BarChart3 size={20} /> },
-  { label: "Cost Analysis", href: "/cost-analysis", icon: <CircleDollarSign size={20} /> },
-  { label: "Metrics", href: "/metrics", icon: <LineChart size={20} /> },
+  { label: "Dashboard", href: "/", icon: <LayoutDashboard size={16} /> },
+  { label: "Compiler", href: "/generator", icon: <Terminal size={16} /> },
+  { label: "Pipeline", href: "/pipeline", icon: <GitMerge size={16} /> },
+  { label: "Validation", href: "/validation", icon: <ShieldCheck size={16} /> },
+  { label: "Repair Engine", href: "/repair", icon: <Wrench size={16} /> },
+  { label: "Execution", href: "/execution", icon: <Play size={16} /> },
+  { label: "Benchmarks", href: "/benchmarks", icon: <BarChart2 size={16} /> },
+  { label: "Metrics", href: "/metrics", icon: <LineChart size={16} /> },
+  { label: "Settings", href: "/settings", icon: <Settings size={16} /> },
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-56 m-4 flex-shrink-0 glass-card rounded-2xl flex flex-col h-[calc(100vh-2rem)]">
-      <div className="h-16 flex items-center px-6 border-b border-white/40">
-        <h1 className="text-lg font-bold text-slate-900 tracking-tight">
-          CompileAI
-        </h1>
+    <aside className="w-64 flex-shrink-0 bg-surface border-r border-border flex flex-col h-screen">
+      <div className="h-14 flex items-center px-4 border-b border-border">
+        <div className="flex items-center gap-2">
+          <div className="w-5 h-5 rounded-[4px] bg-white text-black flex items-center justify-center font-bold text-[10px]">
+            C
+          </div>
+          <h1 className="text-sm font-semibold text-text tracking-tight">
+            CompileAI
+          </h1>
+        </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto py-6 px-3">
-        <div className="space-y-1">
-          <p className="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
-            Pipeline
-          </p>
-          {navItems.map((item, i) => {
+      <div className="flex-1 overflow-y-auto py-4 px-2">
+        <div className="space-y-0.5">
+          {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link
                 key={item.label}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all",
+                  "flex items-center gap-2.5 px-2 py-1.5 rounded-md text-sm transition-colors",
                   isActive
-                    ? "bg-white/80 shadow-sm text-blue-600 font-medium"
-                    : "text-slate-600 hover:bg-white/40 hover:text-slate-900"
+                    ? "bg-white/10 text-white font-medium"
+                    : "text-text-secondary hover:bg-white/5 hover:text-white"
                 )}
               >
-                <span
-                  className={cn(
-                    "flex-shrink-0 transition-colors",
-                    isActive ? "text-blue-600" : "text-slate-400 group-hover:text-slate-600"
-                  )}
-                >
+                <span className={cn("flex-shrink-0", isActive ? "text-white" : "text-text-muted")}>
                   {item.icon}
                 </span>
                 {item.label}
@@ -72,17 +68,17 @@ export function Sidebar() {
         </div>
       </div>
 
-      <div className="p-4 border-t border-white/40">
-        <div className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/40 transition-colors cursor-pointer">
-          <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 font-bold text-xs shadow-sm">
-            JD
+      <div className="p-3 border-t border-border mt-auto">
+        <div className="flex items-center gap-2.5 px-2 py-1.5 rounded-md hover:bg-white/5 transition-colors cursor-pointer">
+          <div className="w-6 h-6 rounded-full bg-accent flex items-center justify-center text-white font-medium text-[10px]">
+            M
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-slate-900 truncate">
-              Jane Doe
+            <p className="text-[13px] font-medium text-text truncate">
+              Mukilan
             </p>
-            <p className="text-xs text-slate-500 truncate">
-              Workspace Admin
+            <p className="text-[11px] text-text-muted truncate">
+              Personal Workspace
             </p>
           </div>
         </div>
