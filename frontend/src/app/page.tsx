@@ -3,6 +3,20 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { apiClient } from "@/lib/utils";
+import { 
+  Zap, 
+  TerminalSquare, 
+  Clock, 
+  CheckCircle, 
+  AlertCircle, 
+  Settings, 
+  Target, 
+  Cuboid, 
+  FileCode2, 
+  ShieldCheck, 
+  Wrench, 
+  Rocket 
+} from "lucide-react";
 
 interface MetricsSummary {
   total_compilations: number;
