@@ -1,0 +1,62 @@
+[
+  {
+    "id": "crm_full",
+    "category": "real",
+    "prompt": "Build a CRM with login, contacts, dashboard, role-based access, and premium plan with payments. Admins can see analytics. Sales managers can manage contacts and export data. Regular users can only view their own contacts.",
+    "expected_domain": "CRM"
+  },
+  {
+    "id": "hrms_system",
+    "category": "real",
+    "prompt": "Build an HRMS with employee profiles, leave management, payroll, attendance tracking, department management, and performance reviews. HR managers can approve leaves and process payroll. Employees can apply for leaves and view their pay slips.",
+    "expected_domain": "HRMS"
+  },
+  {
+    "id": "inventory_management",
+    "category": "real",
+    "prompt": "Build an inventory management system with product catalog, stock tracking, purchase orders, suppliers, warehouses, and low-stock alerts. Warehouse managers can manage stock. Procurement officers can create purchase orders.",
+    "expected_domain": "Inventory"
+  },
+  {
+    "id": "learning_platform",
+    "category": "real",
+    "prompt": "Build an online learning platform with courses, lessons, quizzes, student progress tracking, instructor dashboard, and certificates. Students can enroll in courses and track progress. Instructors can create and manage courses. Admins manage the platform.",
+    "expected_domain": "LMS"
+  },
+  {
+    "id": "ecommerce_store",
+    "category": "real",
+    "prompt": "Build an e-commerce store with product listings, shopping cart, checkout with Stripe, order tracking, customer reviews, and admin dashboard. Customers browse products, add to cart, and pay. Admins manage products, view orders, and handle refunds.",
+    "expected_domain": "Ecommerce"
+  },
+  {
+    "id": "project_management",
+    "category": "real",
+    "prompt": "Build a project management tool like Trello with boards, lists, cards, comments, file attachments, deadlines, and team collaboration. Project managers create boards and assign tasks. Team members update task status and add comments.",
+    "expected_domain": "ProjectManagement"
+  },
+  {
+    "id": "healthcare_portal",
+    "category": "real",
+    "prompt": "Build a healthcare patient portal with appointment booking, medical records, prescription management, doctor profiles, and telemedicine support. Patients book appointments and view records. Doctors manage appointments and prescriptions. Admins manage the system.",
+    "expected_domain": "Healthcare"
+  },
+  {
+    "id": "social_media",
+    "category": "real",
+    "prompt": "Build a social media platform with user profiles, posts, comments, likes, friend connections, messaging, notifications, and content moderation. Users create posts and interact. Moderators review flagged content. Admins manage platform settings.",
+    "expected_domain": "SocialMedia"
+  },
+  {
+    "id": "saas_analytics",
+    "category": "real",
+    "prompt": "Build a SaaS analytics dashboard with user tracking, event logging, funnel analysis, cohort analysis, custom dashboards, data export, and multi-tenant support. Analysts create dashboards. Admins manage tenants and billing. Viewers can only see shared dashboards.",
+    "expected_domain": "Analytics"
+  },
+  {
+    "id": "booking_system",
+    "category": "real",
+    "prompt": "Build a booking and reservation system for a hotel chain with room management, availability calendar, guest profiles, payment processing, booking confirmation emails, and loyalty program. Guests search and book rooms. Front desk manages check-ins. Managers view reports.",
+    "expected_domain": "Booking"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "conflicting_auth",
+    "category": "edge_case",
+    "prompt": "Build an app with Google Login but no authentication. Users should be able to access everything without logging in, but also have personalized dashboards.",
+    "expected_behavior": "detect_conflict"
+  },
+  {
+    "id": "minimal_prompt",
+    "category": "edge_case",
+    "prompt": "Build a dashboard",
+    "expected_behavior": "generate_assumptions"
+  },
+  {
+    "id": "ambiguous_modern",
+    "category": "edge_case",
+    "prompt": "Build a modern app",
+    "expected_behavior": "generate_assumptions"
+  },
+  {
+    "id": "single_word",
+    "category": "edge_case",
+    "prompt": "CRM",
+    "expected_behavior": "generate_assumptions"
+  },
+  {
+    "id": "contradictory_roles",
+    "category": "edge_case",
+    "prompt": "Build a system where all users are admins but also have restricted access. Everyone can delete everything but no one should be able to delete anything important.",
+    "expected_behavior": "detect_conflict"
+  },
+  {
+    "id": "massive_features",
+    "category": "edge_case",
+    "prompt": "Build a super app with CRM, HRMS, inventory, ecommerce, social media, messaging, video calls, file storage, project management, analytics, AI chatbot, payment processing, subscription management, multi-tenancy, API marketplace, webhooks, SSO, audit logs, and compliance reporting.",
+    "expected_behavior": "handle_complexity"
+  },
+  {
+    "id": "no_features",
+    "category": "edge_case",
+    "prompt": "Build an application for my business. It should be good and work well. Make it professional.",
+    "expected_behavior": "generate_assumptions"
+  },
+  {
+    "id": "technical_jargon",
+    "category": "edge_case",
+    "prompt": "Build a microservices-based event-driven CQRS application with saga orchestration, eventual consistency, polyglot persistence, and a BFF layer for the SPA frontend using gRPC for inter-service communication.",
+    "expected_behavior": "extract_architecture"
+  },
+  {
+    "id": "non_english_mixed",
+    "category": "edge_case",
+    "prompt": "Build a Kundenverwaltung (customer management) system with Rechnungen (invoices), Produkte (products), and Berichte (reports). Administratoren manage everything.",
+    "expected_behavior": "handle_multilingual"
+  },
+  {
+    "id": "emoji_prompt",
+    "category": "edge_case",
+    "prompt": "Build a 🛒 shopping app with 💳 payments, 📊 analytics, 👤 user profiles, and 🔔 notifications. Admin 👑 can manage everything.",
+    "expected_behavior": "handle_special_chars"
+  }
+]
