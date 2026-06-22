@@ -4,16 +4,28 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
+import { 
+  LayoutDashboard, 
+  Zap, 
+  Search, 
+  CheckCircle2, 
+  Wrench, 
+  Play, 
+  BarChart3, 
+  CircleDollarSign, 
+  LineChart 
+} from "lucide-react";
+
 const navItems = [
-  { label: "Dashboard", href: "/", icon: "◆" },
-  { label: "Generator", href: "/generator", icon: "⚡" },
-  { label: "Clarify", href: "/clarify", icon: "🔍" },
-  { label: "Validation", href: "/validation", icon: "✓" },
-  { label: "Repair", href: "/repair", icon: "⚙" },
-  { label: "Execution", href: "/execution", icon: "▶" },
-  { label: "Benchmarks", href: "/benchmarks", icon: "📊" },
-  { label: "Cost Analysis", href: "/cost-analysis", icon: "💰" },
-  { label: "Metrics", href: "/metrics", icon: "📈" },
+  { label: "Dashboard", href: "/", icon: <LayoutDashboard size={20} /> },
+  { label: "Generator", href: "/generator", icon: <Zap size={20} /> },
+  { label: "Clarify", href: "/clarify", icon: <Search size={20} /> },
+  { label: "Validation", href: "/validation", icon: <CheckCircle2 size={20} /> },
+  { label: "Repair", href: "/repair", icon: <Wrench size={20} /> },
+  { label: "Execution", href: "/execution", icon: <Play size={20} /> },
+  { label: "Benchmarks", href: "/benchmarks", icon: <BarChart3 size={20} /> },
+  { label: "Cost Analysis", href: "/cost-analysis", icon: <CircleDollarSign size={20} /> },
+  { label: "Metrics", href: "/metrics", icon: <LineChart size={20} /> },
 ];
 
 export function Sidebar() {

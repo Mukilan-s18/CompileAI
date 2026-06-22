@@ -143,7 +143,7 @@ export default function DashboardPage() {
             </p>
           </div>
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-2xl shadow-[0_0_20px_rgba(99,102,241,0.4)] group-hover:shadow-[0_0_30px_rgba(99,102,241,0.6)] transition-all group-hover:scale-110">
-            ⚡
+            <Zap size={28} />
           </div>
         </div>
       </Link>
@@ -171,12 +171,12 @@ export default function DashboardPage() {
                   <p className="text-xs text-text-muted uppercase tracking-wider font-semibold">
                     {card.label}
                   </p>
-                  <p className="text-3xl font-extrabold mt-3 text-text">
+                  <p className="text-3xl font-extrabold mt-3 text-text font-mono">
                     {card.value}
                   </p>
                 </div>
                 <div
-                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${card.color} flex items-center justify-center text-white text-xl shadow-lg`}
+                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${card.color} flex items-center justify-center text-white shadow-lg`}
                 >
                   {card.icon}
                 </div>
@@ -255,10 +255,10 @@ export default function DashboardPage() {
                         {comp.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-text-secondary">
+                    <td className="px-6 py-4 text-sm text-text-secondary font-mono">
                       {comp.validation_errors}
                     </td>
-                    <td className="px-6 py-4 text-sm text-text-secondary">
+                    <td className="px-6 py-4 text-sm text-text-secondary font-mono">
                       {comp.repair_count}
                     </td>
                     <td className="px-6 py-4">
@@ -268,7 +268,7 @@ export default function DashboardPage() {
                         </span>
                       )}
                     </td>
-                    <td className="px-6 py-4 text-sm text-text-secondary">
+                    <td className="px-6 py-4 text-sm text-text-secondary font-mono">
                       {(comp.duration_ms / 1000).toFixed(1)}s
                     </td>
                   </tr>
@@ -289,16 +289,16 @@ export default function DashboardPage() {
         </h2>
         <div className="flex items-center justify-between gap-3 overflow-x-auto pb-4">
           {[
-            { label: "Intent Extraction", icon: "🎯", desc: "NL → Structured" },
-            { label: "System Design", icon: "🏗️", desc: "Intent → Architecture" },
-            { label: "Schema Generation", icon: "📋", desc: "Architecture → Schemas" },
-            { label: "Validation", icon: "✅", desc: "Cross-schema checks" },
-            { label: "Repair", icon: "🔧", desc: "Targeted fixes" },
-            { label: "Simulation", icon: "🚀", desc: "Runtime verification" },
+            { label: "Intent Extraction", icon: <Target size={24} className="text-blue-400" />, desc: "NL → Structured" },
+            { label: "System Design", icon: <Cuboid size={24} className="text-indigo-400" />, desc: "Intent → Architecture" },
+            { label: "Schema Generation", icon: <FileCode2 size={24} className="text-violet-400" />, desc: "Architecture → Schemas" },
+            { label: "Validation", icon: <ShieldCheck size={24} className="text-emerald-400" />, desc: "Cross-schema checks" },
+            { label: "Repair", icon: <Wrench size={24} className="text-amber-400" />, desc: "Targeted fixes" },
+            { label: "Simulation", icon: <Rocket size={24} className="text-rose-400" />, desc: "Runtime verification" },
           ].map((stage, i) => (
             <div key={stage.label} className="flex items-center gap-3">
               <div className="flex flex-col items-center min-w-[140px] p-4 rounded-xl bg-white/[0.02] border border-white/10 hover:border-accent/40 hover:bg-white/[0.04] transition-all hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(99,102,241,0.15)] group">
-                <span className="text-2xl mb-2 group-hover:scale-110 transition-transform">{stage.icon}</span>
+                <span className="mb-2 group-hover:scale-110 transition-transform">{stage.icon}</span>
                 <span className="text-xs font-bold text-text text-center">
                   {stage.label}
                 </span>

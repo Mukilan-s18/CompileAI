@@ -2,35 +2,36 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #03040b;
-  --color-surface: rgba(25, 27, 40, 0.4);
-  --color-surface-hover: rgba(35, 38, 55, 0.6);
-  --color-surface-active: rgba(45, 49, 70, 0.8);
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-light: rgba(255, 255, 255, 0.04);
-  --color-text: #f8fafc;
-  --color-text-secondary: #94a3b8;
-  --color-text-muted: #64748b;
+  --color-background: #020617;
+  --color-surface: #0F172A;
+  --color-surface-hover: #1E293B;
+  --color-surface-active: #334155;
+  --color-border: #1E293B;
+  --color-border-light: #0F172A;
+  --color-text: #F8FAFC;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
   
-  --color-accent: #818cf8;
-  --color-accent-hover: #a5b4fc;
-  --color-accent-glow: rgba(129, 140, 248, 0.3);
+  --color-accent: #22C55E;
+  --color-accent-hover: #4ADE80;
+  --color-accent-glow: rgba(34, 197, 94, 0.2);
   
-  --color-success: #34d399;
-  --color-success-bg: rgba(52, 211, 153, 0.15);
-  --color-warning: #fbbf24;
-  --color-warning-bg: rgba(251, 191, 36, 0.15);
-  --color-error: #f87171;
-  --color-error-bg: rgba(248, 113, 113, 0.15);
-  --color-info: #60a5fa;
-  --color-info-bg: rgba(96, 165, 250, 0.15);
+  --color-success: #22C55E;
+  --color-success-bg: rgba(34, 197, 94, 0.15);
+  --color-warning: #F59E0B;
+  --color-warning-bg: rgba(245, 158, 11, 0.15);
+  --color-error: #EF4444;
+  --color-error-bg: rgba(239, 68, 68, 0.15);
+  --color-info: #3B82F6;
+  --color-info-bg: rgba(59, 130, 246, 0.15);
   
-  --color-violet: #a78bfa;
-  --color-violet-bg: rgba(167, 139, 250, 0.15);
-  --color-emerald: #34d399;
-  --color-amber: #fbbf24;
+  --color-violet: #8B5CF6;
+  --color-violet-bg: rgba(139, 92, 246, 0.15);
+  --color-emerald: #10B981;
+  --color-amber: #F59E0B;
   
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-fira-sans), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-fira-code), monospace;
 }
 
 @layer utilities {
