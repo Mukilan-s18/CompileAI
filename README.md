@@ -15,11 +15,11 @@ Natural Language Input
 │               AI APPLICATION COMPILER               │
 ├─────────────────────────────────────────────────────┤
 │                                                     │
-│  Stage 0: Conflict Detection (Pre-pipeline)          │
-│  ├── Contradiction detection (regex-based)            │
-│  ├── Ambiguity & vagueness scoring                    │
-│  ├── Underspecification detection                     │
-│  └── Auto-assumption generation                       │
+│  Stage 0: Conflict Detection (Pre-pipeline)         │
+│  ├── Contradiction detection (regex-based)          │
+│  ├── Ambiguity & vagueness scoring                  │
+│  ├── Underspecification detection                   │
+│  └── Auto-assumption generation                     │
 │                          ↓                          │
 │  Stage 1: Intent Extraction                         │
 │  ├── NL → Structured IntentModel (Pydantic)         │
@@ -44,7 +44,7 @@ Natural Language Input
 │  ├── Foreign key validation                         │
 │  ├── Role/permission consistency                    │
 │  ├── Hallucinated field detection                   │
-│  └── Feature completeness checks                   │
+│  └── Feature completeness checks                    │
 │                          ↓                          │
 │  Stage 5: Repair Engine                             │
 │  ├── Targeted repairs (not full regen)              │
