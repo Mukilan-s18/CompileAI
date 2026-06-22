@@ -129,20 +129,20 @@ export default function DashboardPage() {
       {/* Quick Start */}
       <Link
         href="/generator"
-        className="block mb-8 glass-card p-6 glow-hover transition-all duration-300 cursor-pointer group animate-fade-in"
+        className="block mb-8 glass-panel glass-panel-hover p-8 transition-all duration-300 cursor-pointer group animate-fade-in-up"
         style={{ animationDelay: "0.1s" }}
       >
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-text group-hover:text-accent transition-colors">
-              Start Compiling →
+            <h2 className="text-xl font-bold text-text group-hover:text-accent transition-colors flex items-center gap-2">
+              Start Compiling <span className="group-hover:translate-x-1 transition-transform">→</span>
             </h2>
-            <p className="text-sm text-text-secondary mt-1">
+            <p className="text-sm text-text-secondary mt-2">
               Enter a product description and generate complete application
               specs
             </p>
           </div>
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent to-violet flex items-center justify-center text-white text-xl">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-2xl shadow-[0_0_20px_rgba(99,102,241,0.4)] group-hover:shadow-[0_0_30px_rgba(99,102,241,0.6)] transition-all group-hover:scale-110">
             ⚡
           </div>
         </div>
@@ -150,33 +150,33 @@ export default function DashboardPage() {
 
       {/* Stats Grid */}
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
           {[...Array(6)].map((_, i) => (
             <div
               key={i}
-              className="glass-card p-5 shimmer h-28 rounded-xl"
+              className="glass-panel p-6 shimmer h-32 rounded-2xl"
             />
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
           {statCards.map((card, i) => (
             <div
               key={card.label}
-              className="glass-card p-5 animate-fade-in hover:border-accent/30 transition-all duration-300"
+              className="glass-panel glass-panel-hover p-6 animate-fade-in-up transition-all duration-300"
               style={{ animationDelay: `${0.15 + i * 0.05}s` }}
             >
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-xs text-text-muted uppercase tracking-wider font-medium">
+                  <p className="text-xs text-text-muted uppercase tracking-wider font-semibold">
                     {card.label}
                   </p>
-                  <p className="text-2xl font-bold mt-2 text-text">
+                  <p className="text-3xl font-extrabold mt-3 text-text">
                     {card.value}
                   </p>
                 </div>
                 <div
-                  className={`w-10 h-10 rounded-lg bg-gradient-to-br ${card.color} flex items-center justify-center text-white text-lg`}
+                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${card.color} flex items-center justify-center text-white text-xl shadow-lg`}
                 >
                   {card.icon}
                 </div>
@@ -188,20 +188,20 @@ export default function DashboardPage() {
 
       {/* Recent Compilations */}
       <div
-        className="glass-card animate-fade-in"
+        className="glass-panel animate-fade-in-up overflow-hidden rounded-2xl"
         style={{ animationDelay: "0.4s" }}
       >
-        <div className="p-5 border-b border-border-light">
-          <h2 className="text-lg font-semibold text-text">
+        <div className="p-6 border-b border-white/5 bg-white/[0.02]">
+          <h2 className="text-lg font-bold text-text">
             Recent Compilations
           </h2>
         </div>
         {compilations.length === 0 ? (
-          <div className="p-12 text-center">
+          <div className="p-16 text-center bg-black/10">
             <p className="text-text-muted text-lg mb-2">
               No compilations yet
             </p>
-            <p className="text-text-muted text-sm">
+            <p className="text-text-secondary text-sm">
               Go to the Generator to create your first compilation
             </p>
           </div>
@@ -209,66 +209,66 @@ export default function DashboardPage() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-border-light">
-                  <th className="text-left text-xs font-medium text-text-muted uppercase tracking-wider px-5 py-3">
+                <tr className="border-b border-white/5 bg-black/20">
+                  <th className="text-left text-xs font-semibold text-text-muted uppercase tracking-wider px-6 py-4">
                     App
                   </th>
-                  <th className="text-left text-xs font-medium text-text-muted uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs font-semibold text-text-muted uppercase tracking-wider px-6 py-4">
                     Domain
                   </th>
-                  <th className="text-left text-xs font-medium text-text-muted uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs font-semibold text-text-muted uppercase tracking-wider px-6 py-4">
                     Status
                   </th>
-                  <th className="text-left text-xs font-medium text-text-muted uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs font-semibold text-text-muted uppercase tracking-wider px-6 py-4">
                     Errors
                   </th>
-                  <th className="text-left text-xs font-medium text-text-muted uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs font-semibold text-text-muted uppercase tracking-wider px-6 py-4">
                     Repairs
                   </th>
-                  <th className="text-left text-xs font-medium text-text-muted uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs font-semibold text-text-muted uppercase tracking-wider px-6 py-4">
                     Execution
                   </th>
-                  <th className="text-left text-xs font-medium text-text-muted uppercase tracking-wider px-5 py-3">
+                  <th className="text-left text-xs font-semibold text-text-muted uppercase tracking-wider px-6 py-4">
                     Duration
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="bg-black/10">
                 {compilations.map((comp) => (
                   <tr
                     key={comp.id}
-                    className="border-b border-border-light hover:bg-surface-hover transition-colors cursor-pointer"
+                    className="border-b border-white/5 hover:bg-white/5 transition-colors cursor-pointer"
                   >
-                    <td className="px-5 py-4">
+                    <td className="px-6 py-4">
                       <Link
                         href={`/generator?id=${comp.id}`}
-                        className="text-sm font-medium text-text hover:text-accent transition-colors"
+                        className="text-sm font-semibold text-text hover:text-accent transition-colors"
                       >
                         {comp.app_name || "Untitled"}
                       </Link>
                     </td>
-                    <td className="px-5 py-4 text-sm text-text-secondary">
+                    <td className="px-6 py-4 text-sm text-text-secondary">
                       {comp.domain}
                     </td>
-                    <td className="px-5 py-4">
+                    <td className="px-6 py-4">
                       <span className={`badge ${statusColors[comp.status] || "badge-info"}`}>
                         {comp.status}
                       </span>
                     </td>
-                    <td className="px-5 py-4 text-sm text-text-secondary">
+                    <td className="px-6 py-4 text-sm text-text-secondary">
                       {comp.validation_errors}
                     </td>
-                    <td className="px-5 py-4 text-sm text-text-secondary">
+                    <td className="px-6 py-4 text-sm text-text-secondary">
                       {comp.repair_count}
                     </td>
-                    <td className="px-5 py-4">
+                    <td className="px-6 py-4">
                       {comp.execution_status && (
                         <span className={`badge ${statusColors[comp.execution_status] || "badge-info"}`}>
                           {comp.execution_status}
                         </span>
                       )}
                     </td>
-                    <td className="px-5 py-4 text-sm text-text-secondary">
+                    <td className="px-6 py-4 text-sm text-text-secondary">
                       {(comp.duration_ms / 1000).toFixed(1)}s
                     </td>
                   </tr>
@@ -281,13 +281,13 @@ export default function DashboardPage() {
 
       {/* Pipeline Architecture Diagram */}
       <div
-        className="mt-8 glass-card p-6 animate-fade-in"
+        className="mt-10 glass-panel p-8 animate-fade-in-up rounded-2xl"
         style={{ animationDelay: "0.5s" }}
       >
-        <h2 className="text-lg font-semibold text-text mb-4">
+        <h2 className="text-lg font-bold text-text mb-6">
           Compiler Pipeline
         </h2>
-        <div className="flex items-center justify-between gap-2 overflow-x-auto pb-2">
+        <div className="flex items-center justify-between gap-3 overflow-x-auto pb-4">
           {[
             { label: "Intent Extraction", icon: "🎯", desc: "NL → Structured" },
             { label: "System Design", icon: "🏗️", desc: "Intent → Architecture" },
@@ -296,18 +296,18 @@ export default function DashboardPage() {
             { label: "Repair", icon: "🔧", desc: "Targeted fixes" },
             { label: "Simulation", icon: "🚀", desc: "Runtime verification" },
           ].map((stage, i) => (
-            <div key={stage.label} className="flex items-center gap-2">
-              <div className="flex flex-col items-center min-w-[120px] p-3 rounded-lg bg-surface-hover border border-border-light hover:border-accent/30 transition-all">
-                <span className="text-xl mb-1">{stage.icon}</span>
-                <span className="text-xs font-medium text-text text-center">
+            <div key={stage.label} className="flex items-center gap-3">
+              <div className="flex flex-col items-center min-w-[140px] p-4 rounded-xl bg-white/[0.02] border border-white/10 hover:border-accent/40 hover:bg-white/[0.04] transition-all hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(99,102,241,0.15)] group">
+                <span className="text-2xl mb-2 group-hover:scale-110 transition-transform">{stage.icon}</span>
+                <span className="text-xs font-bold text-text text-center">
                   {stage.label}
                 </span>
-                <span className="text-[10px] text-text-muted mt-0.5 text-center">
+                <span className="text-[10px] text-text-secondary mt-1 text-center">
                   {stage.desc}
                 </span>
               </div>
               {i < 5 && (
-                <span className="text-text-muted text-lg shrink-0">→</span>
+                <span className="text-accent/40 text-xl shrink-0 font-light">→</span>
               )}
             </div>
           ))}

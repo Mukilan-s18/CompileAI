@@ -7,8 +7,8 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, description }: PageHeaderProps) {
   return (
-    <div className="mb-8">
-      <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+    <div className="mb-8 animate-fade-in-up">
+      <h1 className="text-4xl font-extrabold tracking-tight text-gradient pb-1">
         {title}
       </h1>
       {description && (
