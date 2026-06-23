@@ -129,26 +129,16 @@ export default function Home() {
       
       {/* ═══════════════════ TOP HEADER BAR ═══════════════════ */}
       <div className="flex items-center justify-between px-6 py-3 border-b border-border flex-shrink-0">
-        {/* Left: Welcome + Engine Status */}
+        {/* Left: Welcome */}
         <div className="flex items-center gap-6">
-          <span className="text-sm text-[#94A3B8]">Welcome back, Mukilan 👋</span>
+          <span className="text-sm text-[#94A3B8]">Welcome back, Developer 👋</span>
         </div>
         
-        {/* Right: Engine pill + Docs + Bell + Avatar */}
+        {/* Right: Engine pill */}
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#10B981]/10 border border-[#10B981]/20">
             <div className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
             <span className="text-[11px] font-semibold text-[#10B981]">Engine Online</span>
-          </div>
-          <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm text-[#94A3B8] hover:text-white hover:bg-white/5 transition-colors border border-border">
-            <BookOpen size={14} />
-            Docs
-          </button>
-          <button className="p-2 text-[#475569] hover:text-white transition-colors">
-            <Bell size={16} />
-          </button>
-          <div className="w-8 h-8 rounded-full bg-[#6D5DFB] flex items-center justify-center text-white font-bold text-xs cursor-pointer">
-            MK
           </div>
         </div>
       </div>

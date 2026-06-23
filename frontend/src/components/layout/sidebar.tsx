@@ -94,7 +94,7 @@ export function Sidebar() {
                   key={item.label}
                   href={item.href}
                   className={cn(
-                    "flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[13px] transition-all duration-150 mb-0.5",
+                    "flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[13px] transition-all duration-150 mb-1",
                     isActive
                       ? "bg-[#6D5DFB]/15 text-white font-semibold border border-[#6D5DFB]/20"
                       : "text-[#94A3B8] hover:bg-white/5 hover:text-white"
@@ -112,31 +112,11 @@ export function Sidebar() {
       </div>
 
       {/* User Profile */}
-      <div className="border-t border-border">
-        <div className="px-3 py-3 flex items-center gap-2 hover:bg-white/5 transition-colors cursor-pointer">
-          <div className="w-7 h-7 flex-shrink-0 rounded-full bg-[#6D5DFB] flex items-center justify-center text-white font-bold text-[10px]">
-            MK
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-[12px] font-semibold text-text truncate">
-              Mukilan K
-            </p>
-            <p className="text-[10px] text-text-muted truncate">
-              Developer
-            </p>
-          </div>
-        </div>
-        {/* Bottom Action Icons */}
-        <div className="px-3 pb-3 flex items-center justify-between">
-          <button className="p-1.5 rounded-lg text-text-muted hover:text-white hover:bg-white/5 transition-colors">
-            <Star size={13} />
-          </button>
-          <button className="p-1.5 rounded-lg text-text-muted hover:text-white hover:bg-white/5 transition-colors">
-            <RefreshCw size={13} />
-          </button>
-          <button className="p-1.5 rounded-lg text-text-muted hover:text-white hover:bg-white/5 transition-colors">
-            <Clock size={13} />
-          </button>
+      <div className="border-t border-border mt-auto">
+        <div className="px-3 py-4 flex items-center justify-center hover:bg-white/5 transition-colors cursor-pointer">
+          <p className="text-[12px] font-semibold text-text-muted tracking-wide uppercase">
+            Developer
+          </p>
         </div>
       </div>
     </aside>
