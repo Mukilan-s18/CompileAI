@@ -420,8 +420,8 @@ export default function Home() {
           {/* Output Explorer */}
           <div className="col-span-8 bg-[#111318] border border-[#1E2330] rounded-xl overflow-hidden flex flex-col">
             {/* Tab Bar */}
-            <div className="flex items-center justify-between border-b border-[#1E2330] bg-[#0E1015] px-1">
-              <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar px-2 py-2">
+            <div className="flex items-center justify-between border-b border-[#1E2330] bg-[#0E1015] pl-2 pr-1">
+              <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar px-2 py-3">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
