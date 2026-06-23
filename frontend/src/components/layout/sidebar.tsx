@@ -83,8 +83,8 @@ export function Sidebar() {
       {/* Navigation */}
       <div className="flex-1 overflow-y-auto py-4 px-2.5 custom-scrollbar">
         {navGroups.map((group, idx) => (
-          <div key={group.title} className={cn("space-y-0.5", idx > 0 && "mt-5")}>
-            <p className="px-2 mb-2 text-[10px] font-bold text-text-muted uppercase tracking-[0.1em]">
+          <div key={group.title} className={cn("space-y-0.5", idx > 0 && "mt-4")}>
+            <p className="px-2 mb-1.5 text-[10px] font-bold text-text-muted uppercase tracking-[0.1em]">
               {group.title}
             </p>
             {group.items.map((item) => {
@@ -94,7 +94,7 @@ export function Sidebar() {
                   key={item.label}
                   href={item.href}
                   className={cn(
-                    "flex items-center gap-2.5 px-2.5 py-[7px] rounded-lg text-[13px] transition-all duration-150",
+                    "flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[13px] transition-all duration-150",
                     isActive
                       ? "bg-[#6D5DFB]/15 text-white font-semibold border border-[#6D5DFB]/20"
                       : "text-[#94A3B8] hover:bg-white/5 hover:text-white"
