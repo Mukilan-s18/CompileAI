@@ -304,7 +304,7 @@ export default function Home() {
         </div>
 
         {/* ─── ROW 2: Compiler Pipeline + Output Explorer ─── */}
-        <div className="grid grid-cols-12 gap-6">
+        <div className="grid grid-cols-12 gap-6 mt-12">
           
           {/* Compiler Pipeline */}
           <div className="col-span-4 bg-[#111318] border border-[#1E2330] rounded-xl p-5 flex flex-col">
