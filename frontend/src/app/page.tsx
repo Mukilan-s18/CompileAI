@@ -318,7 +318,7 @@ export default function Home() {
             
             <div className="flex flex-col gap-1 relative">
               {/* Vertical connecting line */}
-              <div className="absolute left-[15px] top-6 bottom-16 w-[1.5px] bg-[#1E2330] z-0" />
+              <div className="absolute left-[15px] top-[32px] bottom-[32px] w-[1.5px] bg-[#1E2330] z-0" />
               
               {stages.map((stage, idx) => {
                 const isComplete = hasCompiled || (isCompiling && currentStage > idx);
