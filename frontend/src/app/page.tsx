@@ -77,10 +77,10 @@ function CircularProgress({ value, color, size = 40 }: { value: number; color: s
 }
 
 export default function Home() {
-  const [prompt, setPrompt] = useState("Build a CRM with:\n  • Authentication (email + Google)\n  • Contacts management\n  • Analytics dashboard\n  • Role-based access (Admin, Manager, Sales)\n  • Premium subscriptions with payments");
+  const [prompt, setPrompt] = useState("");
   const [isCompiling, setIsCompiling] = useState(false);
-  const [hasCompiled, setHasCompiled] = useState(true);
-  const [currentStage, setCurrentStage] = useState(5);
+  const [hasCompiled, setHasCompiled] = useState(false);
+  const [currentStage, setCurrentStage] = useState(-1);
   const [activeTab, setActiveTab] = useState<string>("intent");
 
   const stages = [
@@ -463,7 +463,7 @@ export default function Home() {
             <div className="flex flex-1 min-h-[360px]">
               {/* JSON Viewer */}
               <div className="flex-1 overflow-auto bg-[#0A0A0F] p-4 font-mono text-[13px] leading-relaxed custom-scrollbar border-r border-[#1E2330]">
-                {hasCompiled || activeTab === "intent" ? (
+                {hasCompiled ? (
                   <JsonViewerInline data={(MOCK_DATA as any)[activeTab]} />
                 ) : isCompiling ? (
                   <div className="flex items-center justify-center h-full text-[#475569]">
@@ -478,9 +478,11 @@ export default function Home() {
 
               {/* Right Sidebar: Architecture Overview + Quick Stats */}
               <div className="w-[280px] shrink-0 flex flex-col bg-[#0E1015]">
-                {/* Architecture Overview */}
-                <div className="p-4 border-b border-[#1E2330] flex-1">
-                  <h4 className="text-[10px] font-bold text-[#475569] uppercase tracking-wider mb-4">Architecture Overview</h4>
+                {hasCompiled ? (
+                  <>
+                    {/* Architecture Overview */}
+                    <div className="p-4 border-b border-[#1E2330] flex-1">
+                      <h4 className="text-[10px] font-bold text-[#475569] uppercase tracking-wider mb-4">Architecture Overview</h4>
                   <div className="relative flex flex-col items-center gap-2">
                     {/* Node Graph */}
                     <div className="w-full flex justify-center gap-3 flex-wrap">
@@ -538,7 +540,7 @@ export default function Home() {
                     ].map((stat) => (
                       <div key={stat.label} className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <span style={{ color: stat.color }}>{stat.icon}</span>
+                        <span style={{ color: stat.color }}>{stat.icon}</span>
                           <span className="text-[11px] text-[#94A3B8]">{stat.label}</span>
                         </div>
                         <span className="text-sm font-bold text-white">{stat.value}</span>
@@ -546,21 +548,26 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
+              </>
+            ) : (
+              <div className="flex-1 flex flex-col items-center justify-center p-6 text-center opacity-40">
+                <Cuboid size={32} className="text-[#475569] mb-4" />
+                <p className="text-[11px] font-medium text-[#94A3B8]">Architecture graph and compilation stats will appear here after execution.</p>
               </div>
-            </div>
-
-            {/* Bottom Status Bar */}
-            <div className="px-4 py-2 border-t border-[#1E2330] bg-[#0E1015] flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 size={12} className="text-[#10B981]" />
-                <span className="text-[10px] font-semibold text-[#10B981]">Schema Valid</span>
-              </div>
-              <span className="text-[10px] text-[#475569]">Last updated: 2s ago</span>
-            </div>
+            )}
           </div>
         </div>
 
-        {/* ─── ROW 3: Bottom Dashboard Cards ─── */}
+        {/* Bottom Status Bar */}
+        <div className="px-4 py-2 border-t border-[#1E2330] bg-[#0E1015] flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 size={12} className="text-[#10B981]" />
+            <span className="text-[10px] font-semibold text-[#10B981]">Schema Valid</span>
+          </div>
+          <span className="text-[10px] text-[#475569]">Last updated: 2s ago</span>
+        </div>
+      </div>
+    </div>
         <div className="grid grid-cols-4 gap-6 pb-6">
           <div className="bg-[#111318] border border-[#1E2330] rounded-xl p-5 flex items-center gap-4">
             <div className="relative">
