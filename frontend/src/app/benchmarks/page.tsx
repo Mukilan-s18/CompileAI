@@ -13,10 +13,10 @@ export default function BenchmarksPage() {
   ];
 
   return (
-    <div className="flex flex-col h-screen bg-[#09090B]">
+    <div className="flex flex-col h-screen bg-[#0A0A0F]">
       
       {/* Header */}
-      <header className="flex-shrink-0 px-6 py-4 border-b border-border bg-[#111113] flex items-center justify-between">
+      <header className="flex-shrink-0 px-6 py-4 border-b border-border bg-[#111318] flex items-center justify-between">
         <div>
           <h1 className="text-lg font-semibold text-text tracking-tight flex items-center gap-2">
             <BarChart2 size={18} className="text-accent" />
@@ -59,7 +59,7 @@ export default function BenchmarksPage() {
         <div className="panel overflow-hidden">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-border bg-[#111113]/50 text-[11px] font-semibold text-text-muted uppercase tracking-wider">
+              <tr className="border-b border-border bg-[#111318]/50 text-[11px] font-semibold text-text-muted uppercase tracking-wider">
                 <th className="p-4 pl-5">Benchmark Suite</th>
                 <th className="p-4">Complexity</th>
                 <th className="p-4">Status</th>

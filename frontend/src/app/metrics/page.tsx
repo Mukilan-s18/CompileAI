@@ -4,10 +4,10 @@ import { LineChart, Activity, Zap, Cpu, MemoryStick, Clock } from "lucide-react"
 
 export default function MetricsPage() {
   return (
-    <div className="flex flex-col h-screen bg-[#09090B]">
+    <div className="flex flex-col h-screen bg-[#0A0A0F]">
       
       {/* Header */}
-      <header className="flex-shrink-0 px-6 py-4 border-b border-border bg-[#111113] flex items-center justify-between">
+      <header className="flex-shrink-0 px-6 py-4 border-b border-border bg-[#111318] flex items-center justify-between">
         <div>
           <h1 className="text-lg font-semibold text-text tracking-tight flex items-center gap-2">
             <LineChart size={18} className="text-accent" />
@@ -55,7 +55,7 @@ export default function MetricsPage() {
               <Cpu size={14} className="text-text-muted" />
             </div>
             <p className="text-2xl font-bold text-text mb-1">68.4 <span className="text-sm font-normal text-text-muted">%</span></p>
-            <div className="w-full h-1 bg-[#111113] rounded-full mt-2 overflow-hidden">
+            <div className="w-full h-1 bg-[#111318] rounded-full mt-2 overflow-hidden">
               <div className="h-full bg-accent rounded-full" style={{ width: '68.4%' }}></div>
             </div>
           </div>
@@ -66,7 +66,7 @@ export default function MetricsPage() {
               <MemoryStick size={14} className="text-text-muted" />
             </div>
             <p className="text-2xl font-bold text-text mb-1">12.4 <span className="text-sm font-normal text-text-muted">GB</span></p>
-            <div className="w-full h-1 bg-[#111113] rounded-full mt-2 overflow-hidden">
+            <div className="w-full h-1 bg-[#111318] rounded-full mt-2 overflow-hidden">
               <div className="h-full bg-warning rounded-full" style={{ width: '42%' }}></div>
             </div>
           </div>

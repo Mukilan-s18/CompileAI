@@ -36,11 +36,11 @@ export function ArchitectureGraph() {
           <path d="M 570,140 C 570,200 520,220 470,220" stroke="#6D5DFB" strokeWidth="2" strokeDasharray="4 4" fill="none" className="opacity-50 animate-[dash_20s_linear_infinite]" />
         </svg>
 
-        <style dangerouslySetInnerHTML={{__html: `
+        <style>{`
           @keyframes dash {
             to { stroke-dashoffset: -1000; }
           }
-        `}} />
+        `}</style>
 
         {/* Nodes - Top Row */}
         <div className="w-full flex justify-center items-center gap-12 z-10">

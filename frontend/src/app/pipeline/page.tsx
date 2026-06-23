@@ -23,10 +23,10 @@ export default function PipelineConfiguration() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#09090B]">
+    <div className="flex flex-col h-screen bg-[#0A0A0F]">
       
       {/* Header */}
-      <header className="flex-shrink-0 px-6 py-4 border-b border-border bg-[#111113] flex items-center justify-between">
+      <header className="flex-shrink-0 px-6 py-4 border-b border-border bg-[#111318] flex items-center justify-between">
         <div>
           <h1 className="text-lg font-semibold text-text tracking-tight flex items-center gap-2">
             <GitMerge size={18} className="text-accent" />
@@ -56,7 +56,7 @@ export default function PipelineConfiguration() {
             {stages.map((stage, idx) => {
               const Icon = stage.icon;
               return (
-                <div key={stage.id} className={`flex items-center justify-between p-4 rounded-lg border ${stage.enabled ? 'border-accent/30 bg-accent/5' : 'border-border bg-[#111113] opacity-60'}`}>
+                <div key={stage.id} className={`flex items-center justify-between p-4 rounded-lg border ${stage.enabled ? 'border-accent/30 bg-accent/5' : 'border-border bg-[#111318] opacity-60'}`}>
                   <div className="flex items-center gap-4">
                     <div className={`w-8 h-8 rounded-md flex items-center justify-center ${stage.enabled ? 'bg-accent/10 text-accent' : 'bg-white/5 text-text-muted'}`}>
                       <Icon size={16} />

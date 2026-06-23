@@ -58,10 +58,10 @@ export default function ValidationCenter() {
   const warningCount = VALIDATION_ERRORS.filter(e => e.severity === "WARNING").length;
 
   return (
-    <div className="flex flex-col h-screen bg-[#09090B]">
+    <div className="flex flex-col h-screen bg-[#0A0A0F]">
       
       {/* Header Summary Bar */}
-      <header className="flex-shrink-0 px-6 py-4 border-b border-border bg-[#111113] flex items-center justify-between">
+      <header className="flex-shrink-0 px-6 py-4 border-b border-border bg-[#111318] flex items-center justify-between">
         <div>
           <h1 className="text-lg font-semibold text-text tracking-tight flex items-center gap-2">
             <ShieldAlert size={18} className="text-error" />
@@ -118,10 +118,10 @@ export default function ValidationCenter() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.2, delay: idx * 0.05 }}
-                className="panel overflow-hidden border border-border bg-[#131316]"
+                className="panel overflow-hidden border border-border bg-[#151821]"
               >
                 {/* Log Header */}
-                <div className="px-4 py-2 border-b border-border/50 bg-[#111113] flex items-center justify-between">
+                <div className="px-4 py-2 border-b border-border/50 bg-[#111318] flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <SeverityBadge severity={error.severity} />
                     <span className="text-xs font-mono text-text-muted">{error.id}</span>

@@ -57,10 +57,10 @@ export default function RepairEngine() {
   ];
 
   return (
-    <div className="flex flex-col h-screen bg-[#09090B]">
+    <div className="flex flex-col h-screen bg-[#0A0A0F]">
       
       {/* Header */}
-      <header className="flex-shrink-0 px-6 py-4 border-b border-border bg-[#111113] flex items-center justify-between">
+      <header className="flex-shrink-0 px-6 py-4 border-b border-border bg-[#111318] flex items-center justify-between">
         <div>
           <h1 className="text-lg font-semibold text-text tracking-tight flex items-center gap-2">
             <Wrench size={18} className="text-accent" />
@@ -88,7 +88,7 @@ export default function RepairEngine() {
               <div key={repair.id} className="relative flex items-start gap-6 group">
                 
                 {/* Timeline Node */}
-                <div className="relative z-10 w-12 h-12 rounded-xl bg-[#111113] border border-border flex items-center justify-center shrink-0">
+                <div className="relative z-10 w-12 h-12 rounded-xl bg-[#111318] border border-border flex items-center justify-center shrink-0">
                   {repair.icon}
                 </div>
 
@@ -106,7 +106,7 @@ export default function RepairEngine() {
                   
                   <p className="text-sm font-medium text-text mb-3">{repair.description}</p>
                   
-                  <div className="flex items-center gap-2 bg-[#09090B] p-2 rounded-md border border-white/5 w-fit">
+                  <div className="flex items-center gap-2 bg-[#0A0A0F] p-2 rounded-md border border-white/5 w-fit">
                     <Activity size={12} className="text-text-muted" />
                     <code className="text-[11px] font-mono text-text-secondary">{repair.location}</code>
                   </div>

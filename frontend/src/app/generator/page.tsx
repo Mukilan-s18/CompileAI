@@ -21,9 +21,9 @@ export default function GeneratorPage() {
   ];
 
   return (
-    <div className="flex flex-col h-screen bg-[#09090B]">
+    <div className="flex flex-col h-screen bg-[#0A0A0F]">
       {/* Workspace Header */}
-      <header className="flex-shrink-0 px-6 py-4 border-b border-border bg-[#111113] flex items-center justify-between">
+      <header className="flex-shrink-0 px-6 py-4 border-b border-border bg-[#111318] flex items-center justify-between">
         <div>
           <h1 className="text-lg font-semibold text-text tracking-tight">Compiler Output</h1>
           <p className="text-xs text-text-muted mt-0.5">B2B SaaS CRM Configuration</p>
@@ -42,7 +42,7 @@ export default function GeneratorPage() {
         orientation="vertical"
       >
         {/* Tab List (Left Column of Workspace) */}
-        <Tabs.List className="w-56 flex-shrink-0 border-r border-border bg-[#111113] p-3 space-y-1 overflow-y-auto custom-scrollbar">
+        <Tabs.List className="w-56 flex-shrink-0 border-r border-border bg-[#111318] p-3 space-y-1 overflow-y-auto custom-scrollbar">
           <div className="text-[10px] font-semibold text-text-muted uppercase tracking-wider mb-3 px-2">
             Generated Artifacts
           </div>
@@ -61,7 +61,7 @@ export default function GeneratorPage() {
         </Tabs.List>
 
         {/* Tab Content (Right Column JSON Viewer) */}
-        <div className="flex-1 p-6 bg-[#09090B] overflow-hidden flex flex-col">
+        <div className="flex-1 p-6 bg-[#0A0A0F] overflow-hidden flex flex-col">
           {tabs.map((tab) => (
             <Tabs.Content 
               key={tab.id} 
