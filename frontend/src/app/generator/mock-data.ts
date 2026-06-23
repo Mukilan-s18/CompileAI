@@ -116,36 +116,41 @@ export const MOCK_DATA = {
     }
   },
   validationReport: {
-    status: "PASSED_WITH_WARNINGS",
-    errors: [],
-    warnings: [
+    total_issues: 2,
+    issues: [
       {
-        code: "W_INDEX_MISSING",
-        message: "Contact.email is frequently queried but lacks an index.",
-        suggestion: "Add @@index([email]) to Contact model."
+        severity: "HIGH",
+        code: "VAL_SCHEMA_MISMATCH",
+        description: "API schema mismatch: expected userId but received user_id",
+        affected_nodes: ["apiSchema", "databaseSchema"]
       },
       {
-        code: "W_RATE_LIMIT",
-        message: "No strict rate limit defined for /api/webhooks/stripe.",
-        suggestion: "Implement IP-based rate limiting for webhook endpoints."
+        severity: "MEDIUM",
+        code: "VAL_MISSING_INDEX",
+        description: "Missing database index on frequently queried field: email",
+        affected_nodes: ["databaseSchema"]
       }
-    ],
-    checks_performed: 142
+    ]
   },
   executionReport: {
-    status: "READY",
-    build_time_ms: 1240,
-    container_image: "compileai/b2b-crm-base:latest",
-    environment_variables_required: [
-      "DATABASE_URL",
-      "NEXTAUTH_SECRET",
-      "STRIPE_SECRET_KEY",
-      "STRIPE_WEBHOOK_SECRET"
-    ],
-    next_steps: [
-      "Provision PostgreSQL database",
-      "Deploy to Vercel",
-      "Configure Stripe webhooks"
-    ]
+    status: "PASS",
+    routes_generated: 14,
+    api_endpoints: 21,
+    db_tables: 8,
+    rbac_policies: 12,
+    latency_ms: 1240
   }
+};
+
+export const DEMO_ARCHITECTURE = {
+  app_name: "CRM Configuration",
+  status: "Awaiting Compilation",
+  entities: ["User", "Contact", "Organization", "Deal"],
+  roles: ["Admin", "Manager", "SalesRep"],
+  features: [
+    "Authentication",
+    "Role-based Access",
+    "Analytics Dashboard",
+    "API Integrations"
+  ]
 };
