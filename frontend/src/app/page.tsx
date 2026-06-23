@@ -421,15 +421,15 @@ export default function Home() {
           <div className="col-span-8 bg-[#111318] border border-[#1E2330] rounded-xl overflow-hidden flex flex-col">
             {/* Tab Bar */}
             <div className="flex items-center justify-between border-b border-[#1E2330] bg-[#0E1015] px-1">
-              <div className="flex items-center overflow-x-auto custom-scrollbar">
+              <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar px-2 py-2">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`px-3 py-2.5 text-[11px] font-semibold tracking-wide transition-colors border-b-2 whitespace-nowrap ${
+                    className={`px-3 py-1.5 rounded-md text-[11px] font-semibold tracking-wide transition-all border whitespace-nowrap ${
                       activeTab === tab.id 
-                        ? "text-white border-[#6D5DFB]" 
-                        : "text-[#475569] border-transparent hover:text-[#94A3B8]"
+                        ? "text-white border-[#6D5DFB] bg-[#6D5DFB]/10" 
+                        : "text-[#475569] border-[#1E2330] bg-[#111318] hover:text-[#94A3B8] hover:border-[#475569]/50"
                     }`}
                   >
                     {tab.label}
