@@ -1,0 +1,41 @@
+name: Security & Pre-Deploy Checklist
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security_audit:
+    name: Security & Code Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    - name: Install Dependencies
+      run: |
+        cd frontend
+        npm ci
+
+    - name: Audit Dependencies (Rule 10)
+      run: |
+        cd frontend
+        npm audit --audit-level=high
+
+    - name: Check Formatting & Lints
+      run: |
+        cd frontend
+        npm run lint
+
+    - name: Type Checking
+      run: |
+        cd frontend
+        npm run build
