@@ -15,16 +15,36 @@ import {
   Settings 
 } from "lucide-react";
 
-const navItems = [
-  { label: "Dashboard", href: "/", icon: <LayoutDashboard size={16} /> },
-  { label: "Compiler", href: "/generator", icon: <Terminal size={16} /> },
-  { label: "Pipeline", href: "/pipeline", icon: <GitMerge size={16} /> },
-  { label: "Validation", href: "/validation", icon: <ShieldCheck size={16} /> },
-  { label: "Repair Engine", href: "/repair", icon: <Wrench size={16} /> },
-  { label: "Execution", href: "/execution", icon: <Play size={16} /> },
-  { label: "Benchmarks", href: "/benchmarks", icon: <BarChart2 size={16} /> },
-  { label: "Metrics", href: "/metrics", icon: <LineChart size={16} /> },
-  { label: "Settings", href: "/settings", icon: <Settings size={16} /> },
+const navGroups = [
+  {
+    title: "BUILD",
+    items: [
+      { label: "Dashboard", href: "/", icon: <LayoutDashboard size={16} /> },
+      { label: "Compiler", href: "/generator", icon: <Terminal size={16} /> },
+      { label: "Pipeline", href: "/pipeline", icon: <GitMerge size={16} /> },
+    ]
+  },
+  {
+    title: "RELIABILITY",
+    items: [
+      { label: "Validation", href: "/validation", icon: <ShieldCheck size={16} /> },
+      { label: "Repair Engine", href: "/repair", icon: <Wrench size={16} /> },
+      { label: "Runtime Verification", href: "/execution", icon: <Play size={16} /> },
+    ]
+  },
+  {
+    title: "EVALUATION",
+    items: [
+      { label: "Benchmarks", href: "/benchmarks", icon: <BarChart2 size={16} /> },
+      { label: "Metrics", href: "/metrics", icon: <LineChart size={16} /> },
+    ]
+  },
+  {
+    title: "SYSTEM",
+    items: [
+      { label: "Settings", href: "/settings", icon: <Settings size={16} /> },
+    ]
+  }
 ];
 
 export function Sidebar() {
@@ -43,29 +63,34 @@ export function Sidebar() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto py-4 px-2">
-        <div className="space-y-0.5">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
-            return (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={cn(
-                  "flex items-center gap-2.5 px-2 py-1.5 rounded-md text-sm transition-colors",
-                  isActive
-                    ? "bg-white/10 text-white font-medium"
-                    : "text-text-secondary hover:bg-white/5 hover:text-white"
-                )}
-              >
-                <span className={cn("flex-shrink-0", isActive ? "text-white" : "text-text-muted")}>
-                  {item.icon}
-                </span>
-                {item.label}
-              </Link>
-            );
-          })}
-        </div>
+      <div className="flex-1 overflow-y-auto py-4 px-2 custom-scrollbar">
+        {navGroups.map((group, idx) => (
+          <div key={group.title} className={cn("space-y-0.5", idx > 0 && "mt-6")}>
+            <p className="px-2 mb-2 text-[10px] font-semibold text-text-muted uppercase tracking-wider">
+              {group.title}
+            </p>
+            {group.items.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={cn(
+                    "flex items-center gap-2.5 px-2 py-1.5 rounded-md text-sm transition-colors",
+                    isActive
+                      ? "bg-white/10 text-white font-medium"
+                      : "text-text-secondary hover:bg-white/5 hover:text-white"
+                  )}
+                >
+                  <span className={cn("flex-shrink-0", isActive ? "text-white" : "text-text-muted")}>
+                    {item.icon}
+                  </span>
+                  {item.label}
+                </Link>
+              );
+            })}
+          </div>
+        ))}
       </div>
 
       <div className="p-3 border-t border-border mt-auto">
