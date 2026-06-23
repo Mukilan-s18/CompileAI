@@ -144,7 +144,7 @@ export default function Home() {
       </div>
 
       {/* ═══════════════════ SCROLLABLE CONTENT ═══════════════════ */}
-      <div className="flex-1 overflow-auto p-6 space-y-6">
+      <div className="flex-1 overflow-auto p-6 space-y-12">
         
         {/* ─── ROW 1: Hero + Engine Status + Metrics ─── */}
         <div className="grid grid-cols-12 gap-6">
