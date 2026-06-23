@@ -1,119 +1,85 @@
-"use client";
-
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
 import { 
-  LayoutDashboard, 
-  Terminal, 
-  GitMerge, 
-  ShieldCheck, 
-  Wrench, 
   Play, 
-  BarChart2, 
-  LineChart, 
+  Terminal, 
   Settings,
-  LayoutTemplate,
-  FileText,
-  Key,
-  BookOpen,
-  Star,
-  RefreshCw,
-  Clock
+  Database,
+  BarChart3,
+  Box,
+  ShieldCheck,
+  CheckCircle2,
+  BrainCircuit,
+  Eye
 } from "lucide-react";
 
-const navGroups = [
-  {
-    title: "BUILD",
-    items: [
-      { label: "Dashboard", href: "/", icon: <LayoutDashboard size={16} /> },
-      { label: "Compiler", href: "/generator", icon: <Terminal size={16} /> },
-      { label: "Pipeline", href: "/pipeline", icon: <GitMerge size={16} /> },
-      { label: "Templates", href: "/templates", icon: <LayoutTemplate size={16} /> },
-    ]
-  },
-  {
-    title: "RELIABILITY",
-    items: [
-      { label: "Validation", href: "/validation", icon: <ShieldCheck size={16} /> },
-      { label: "Repair Engine", href: "/repair", icon: <Wrench size={16} /> },
-      { label: "Runtime Verification", href: "/execution", icon: <Play size={16} /> },
-    ]
-  },
-  {
-    title: "EVALUATION",
-    items: [
-      { label: "Benchmarks", href: "/benchmarks", icon: <BarChart2 size={16} /> },
-      { label: "Metrics", href: "/metrics", icon: <LineChart size={16} /> },
-      { label: "Logs", href: "/logs", icon: <FileText size={16} /> },
-    ]
-  },
-  {
-    title: "SYSTEM",
-    items: [
-      { label: "Settings", href: "/settings", icon: <Settings size={16} /> },
-      { label: "API Keys", href: "/keys", icon: <Key size={16} /> },
-      { label: "Documentation", href: "/docs", icon: <BookOpen size={16} /> },
-    ]
-  }
-];
+const NavGroup = ({ title, items }: { title: string, items: { name: string, icon: React.ElementType, href: string }[] }) => (
+  <div className="mb-6">
+    <h3 className="text-[10px] font-bold text-[#475569] uppercase tracking-widest px-3 mb-3">{title}</h3>
+    <div className="flex flex-col space-y-0.5">
+      {items.map((item) => (
+        <Link 
+          key={item.name} 
+          href={item.href}
+          className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-200 group relative
+            ${item.href === "/reviewer" 
+              ? "text-[#6D5DFB] bg-[#6D5DFB]/10 hover:bg-[#6D5DFB]/20" 
+              : "text-[#94A3B8] hover:text-white hover:bg-[#1E2330]"
+            }`}
+        >
+          <item.icon size={16} className={item.href === "/reviewer" ? "text-[#6D5DFB]" : "text-[#475569] group-hover:text-white transition-colors"} />
+          <span>{item.name}</span>
+          {item.href === "/reviewer" && (
+            <span className="absolute right-2 w-1.5 h-1.5 rounded-full bg-[#6D5DFB] animate-pulse" />
+          )}
+        </Link>
+      ))}
+    </div>
+  </div>
+);
 
 export function Sidebar() {
-  const pathname = usePathname();
+  const lifecycleItems = [
+    { name: "Compiler IDE", icon: Play, href: "/" },
+    { name: "Schema Generation", icon: Database, href: "/generator" },
+    { name: "Validation Engine", icon: ShieldCheck, href: "/validation" },
+    { name: "Repair Pipeline", icon: CheckCircle2, href: "/repair" },
+    { name: "Execution Logic", icon: Terminal, href: "/execution" },
+  ];
+
+  const metricsItems = [
+    { name: "Reviewer Mode", icon: Eye, href: "/reviewer" },
+    { name: "Benchmark Center", icon: BarChart3, href: "/benchmarks" },
+    { name: "Architecture Models", icon: Box, href: "/templates" },
+    { name: "Model Settings", icon: BrainCircuit, href: "/settings" },
+  ];
 
   return (
-    <aside className="w-[190px] flex-shrink-0 bg-[#0E1015] border-r border-border flex flex-col h-screen">
-      {/* Logo */}
-      <div className="h-14 flex items-center px-3 border-b border-border">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-[#6D5DFB] text-white flex items-center justify-center font-bold text-sm">
-            C
+    <div className="w-[220px] h-full bg-[#0E1015] border-r border-[#1E2330] flex flex-col z-20 shrink-0 relative overflow-hidden">
+      <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#1E2330 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+      
+      <div className="p-6 border-b border-[#1E2330] relative z-10 flex items-center justify-between">
+        <div className="flex items-center space-x-3">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7C6EFB] to-[#5B4AEB] flex items-center justify-center shadow-[0_0_15px_rgba(109,93,251,0.3)] border border-[#6D5DFB]/50">
+            <span className="text-white font-bold text-sm font-mono tracking-tighter">AI</span>
           </div>
-          <h1 className="text-[13px] font-bold text-text tracking-tight">
-            CompileAI
-          </h1>
+          <div>
+            <h2 className="text-[13px] font-bold text-white tracking-tight">Compile</h2>
+            <p className="text-[9px] text-[#94A3B8] uppercase tracking-widest font-mono">v0.1.0-alpha</p>
+          </div>
         </div>
       </div>
 
-      {/* Navigation */}
-      <div className="flex-1 overflow-y-auto py-4 px-2 custom-scrollbar">
-        {navGroups.map((group, idx) => (
-          <div key={group.title} className={cn(idx > 0 && "mt-4")}>
-            <p className="px-2 mb-1.5 text-[10px] font-bold text-text-muted uppercase tracking-[0.1em]">
-              {group.title}
-            </p>
-            {group.items.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={cn(
-                    "flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[13px] transition-all duration-150 mb-1",
-                    isActive
-                      ? "bg-[#6D5DFB]/15 text-white font-semibold border border-[#6D5DFB]/20"
-                      : "text-[#94A3B8] hover:bg-white/5 hover:text-white"
-                  )}
-                >
-                  <span className={cn("flex-shrink-0", isActive ? "text-[#6D5DFB]" : "text-[#475569]")}>
-                    {item.icon}
-                  </span>
-                  <span className="truncate">{item.label}</span>
-                </Link>
-              );
-            })}
-          </div>
-        ))}
+      <div className="flex-1 py-6 px-3 overflow-y-auto custom-scrollbar relative z-10">
+        <NavGroup title="Core Lifecycle" items={lifecycleItems} />
+        <NavGroup title="Telemetry & Output" items={metricsItems} />
       </div>
 
-      {/* User Profile */}
-      <div className="border-t border-border mt-auto">
-        <div className="px-3 py-4 flex items-center justify-center hover:bg-white/5 transition-colors cursor-pointer">
-          <p className="text-[12px] font-semibold text-text-muted tracking-wide uppercase">
-            Developer
-          </p>
-        </div>
+      <div className="p-4 border-t border-[#1E2330] relative z-10 bg-[#111318]">
+        <Link href="/settings" className="flex items-center space-x-3 px-3 py-2 rounded-lg text-[13px] font-medium text-[#94A3B8] hover:text-white hover:bg-[#1E2330] transition-colors group">
+          <Settings size={16} className="text-[#475569] group-hover:text-white transition-colors" />
+          <span>Workspace Setup</span>
+        </Link>
       </div>
-    </aside>
+    </div>
   );
 }

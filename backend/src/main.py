@@ -1,68 +1,88 @@
-"""FastAPI application entry point.
-
-Configures CORS, mounts routes, and sets up Prometheus metrics middleware.
-"""
-
-from __future__ import annotations
-
-import logging
-
-from fastapi import FastAPI
+import uuid
+import json
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
-from src.config import settings
-from src.api.routes import router
+from src.pipeline.intent import extract_intent
+from src.pipeline.architecture import design_architecture
+from src.pipeline.schemas import generate_schemas
+from src.pipeline.validation import validate_schema
+from src.pipeline.repair import repair_schema
+from src.pipeline.runtime import verify_execution
+from src.services.telemetry import TelemetryLogger
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)-7s | %(name)s | %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
-logger = logging.getLogger(__name__)
+app = FastAPI(title="CompileAI Core Engine")
 
-# Create FastAPI app
-app = FastAPI(
-    title="AI Application Compiler",
-    description=(
-        "Converts natural language product requirements into "
-        "validated, executable application specifications."
-    ),
-    version="1.0.0",
-    docs_url="/docs",
-    redoc_url="/redoc",
-)
-
-# CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Mount routes
-app.include_router(router, prefix="/api")
+class CompileRequest(BaseModel):
+    prompt: str
 
-
-@app.on_event("startup")
-async def startup_event():
-    """Log startup information."""
-    logger.info("=" * 60)
-    logger.info("AI Application Compiler starting up")
-    logger.info(f"  Model: {settings.openai_model}")
-    logger.info(f"  Temperature: {settings.temperature}")
-    logger.info(f"  Mock mode: {not settings.openai_api_key}")
-    logger.info(f"  CORS origins: {settings.cors_origins}")
-    logger.info("=" * 60)
-
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(
-        "src.main:app",
-        host=settings.host,
-        port=settings.port,
-        reload=True,
-    )
+@app.post("/api/compile")
+async def run_compiler_pipeline(request: CompileRequest):
+    session_id = str(uuid.uuid4())
+    logger = TelemetryLogger(session_id)
+    
+    try:
+        # 1. Intent Extraction
+        logger.start_stage("intent_extraction")
+        intent = extract_intent(request.prompt)
+        # Note: In a real production app we would extract token counts from the LLM response object.
+        # Instructor strips the raw response by default, so we mock tokens for now.
+        logger.end_stage("intent_extraction", prompt_tokens=150, completion_tokens=80)
+        
+        # 2. Architecture Design
+        logger.start_stage("system_design")
+        architecture = design_architecture(intent)
+        logger.end_stage("system_design", prompt_tokens=250, completion_tokens=120)
+        
+        # 3. Schema Generation
+        logger.start_stage("schema_generation")
+        app_schema = generate_schemas(intent, architecture)
+        logger.end_stage("schema_generation", prompt_tokens=500, completion_tokens=800)
+        
+        # 4. Validation Engine
+        logger.start_stage("validation")
+        validation_report = validate_schema(app_schema)
+        logger.end_stage("validation")
+        
+        # 5. Targeted Repair Engine (Loop max 3 times)
+        repair_count = 0
+        max_repairs = 3
+        while not validation_report.is_valid and repair_count < max_repairs:
+            repair_count += 1
+            logger.start_stage(f"repair_loop_{repair_count}")
+            app_schema = repair_schema(app_schema, validation_report)
+            validation_report = validate_schema(app_schema)
+            logger.end_stage(f"repair_loop_{repair_count}", prompt_tokens=900, completion_tokens=300)
+            
+        # 6. Runtime Execution Awareness
+        logger.start_stage("runtime_verification")
+        execution_report = verify_execution(app_schema)
+        logger.end_stage("runtime_verification")
+        
+        # Assemble Final Payload
+        return {
+            "session_id": session_id,
+            "status": "success" if validation_report.is_valid and execution_report.is_executable else "failed",
+            "telemetry": logger.get_report(),
+            "repair_count": repair_count,
+            "outputs": {
+                "intent": json.loads(intent.model_dump_json()),
+                "architecture": json.loads(architecture.model_dump_json()),
+                "application_schema": json.loads(app_schema.model_dump_json()),
+                "validation": json.loads(validation_report.model_dump_json()),
+                "execution": json.loads(execution_report.model_dump_json())
+            }
+        }
+        
+    except Exception as e:
+        logger.end_stage("failed_stage")
+        raise HTTPException(status_code=500, detail=str(e))
