@@ -1,17 +1,26 @@
 export const MOCK_DATA = {
   intent: {
-    analysis_id: "int_7f8a9b2c",
-    timestamp: "2026-06-23T14:00:00Z",
-    raw_prompt: "Build a CRM with authentication, contacts, analytics dashboard, role-based access, and premium subscription.",
-    extracted_features: [
-      { feature: "Authentication", confidence: 0.99, dependencies: ["Users"] },
-      { feature: "Contact Management", confidence: 0.98, dependencies: ["Database", "Users"] },
-      { feature: "Analytics Dashboard", confidence: 0.95, dependencies: ["Contacts", "Subscriptions"] },
-      { feature: "Role-based Access Control (RBAC)", confidence: 0.99, dependencies: ["Authentication"] },
-      { feature: "Premium Subscriptions", confidence: 0.92, dependencies: ["Stripe", "Users"] }
-    ],
-    domain: "B2B SaaS",
-    complexity_score: 8.5
+    app_name: "CRM",
+    domain: "Customer Relationship Management",
+    features: {
+      authentication: [
+        "email",
+        "google"
+      ],
+      contacts: true,
+      dashboard: true,
+      role_based_access: true,
+      analytics: true,
+      subscriptions: true,
+      payments: true
+    },
+    roles: ["Admin", "Manager", "Sales", "User"],
+    authentication: {
+      methods: ["email", "google"]
+    },
+    payments: true,
+    analytics: true,
+    premium: true
   },
   architecture: {
     frontend: {
@@ -135,22 +144,10 @@ export const MOCK_DATA = {
   executionReport: {
     status: "PASS",
     routes_generated: 14,
-    api_endpoints: 21,
-    db_tables: 8,
+    api_endpoints: 28,
+    db_tables: 14,
     rbac_policies: 12,
+    ui_pages: 22,
     latency_ms: 1240
   }
-};
-
-export const DEMO_ARCHITECTURE = {
-  app_name: "CRM Configuration",
-  status: "Awaiting Compilation",
-  entities: ["User", "Contact", "Organization", "Deal"],
-  roles: ["Admin", "Manager", "SalesRep"],
-  features: [
-    "Authentication",
-    "Role-based Access",
-    "Analytics Dashboard",
-    "API Integrations"
-  ]
 };
