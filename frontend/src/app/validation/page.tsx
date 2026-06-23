@@ -1,181 +1,185 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { apiClient } from "@/lib/utils";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ShieldCheck, ShieldAlert, FileWarning, Filter, Terminal, AlertTriangle, AlertCircle, Info, FileCode2, Wrench } from "lucide-react";
+import { VALIDATION_ERRORS, ErrorCategory, ErrorSeverity } from "./mock-data";
 
-interface ValidationError {
-  error_id: string;
-  error_type: string;
-  severity: string;
-  location: string;
-  message: string;
-  suggestion: string;
-  related_locations: string[];
-}
-
-interface CompilationSummary {
-  id: string;
-  status: string;
-  app_name: string;
-  validation_errors: number;
-}
-
-export default function ValidationPage() {
-  const [compilations, setCompilations] = useState<CompilationSummary[]>([]);
-  const [selectedId, setSelectedId] = useState<string>("");
-  const [errors, setErrors] = useState<ValidationError[]>([]);
-  const [warnings, setWarnings] = useState<ValidationError[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [filter, setFilter] = useState<string>("all");
-
-  useEffect(() => {
-    apiClient<CompilationSummary[]>("/compilations")
-      .then(setCompilations)
-      .catch(() => {});
-  }, []);
-
-  async function loadValidation(id: string) {
-    setSelectedId(id);
-    setLoading(true);
-    try {
-      const result = await apiClient<Record<string, unknown>>(`/compilations/${id}`);
-      const validation = result.validation as Record<string, unknown>;
-      if (validation) {
-        setErrors((validation.errors as ValidationError[]) || []);
-        setWarnings((validation.warnings as ValidationError[]) || []);
-      }
-    } catch {
-      setErrors([]);
-    } finally {
-      setLoading(false);
-    }
+const SeverityIcon = ({ severity }: { severity: ErrorSeverity }) => {
+  switch (severity) {
+    case "CRITICAL": return <AlertOctagon className="text-error" size={16} />;
+    case "ERROR": return <AlertCircle className="text-error" size={16} />;
+    case "WARNING": return <AlertTriangle className="text-warning" size={16} />;
+    case "INFO": return <Info className="text-info" size={16} />;
   }
+};
 
-  const filteredErrors =
-    filter === "all"
-      ? [...errors, ...warnings]
-      : filter === "errors"
-      ? errors
-      : warnings;
+// Simple Lucide React missing icon mock
+const AlertOctagon = ({ className, size }: { className?: string; size?: number }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width={size || 24} 
+    height={size || 24} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+    <line x1="12" y1="8" x2="12" y2="12"></line>
+    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+  </svg>
+);
 
-  const severityIcon: Record<string, string> = {
-    error: "✕",
-    warning: "⚠",
-    info: "ℹ",
+const SeverityBadge = ({ severity }: { severity: ErrorSeverity }) => {
+  const styles = {
+    CRITICAL: "badge-error",
+    ERROR: "badge-error opacity-80",
+    WARNING: "badge-warning",
+    INFO: "badge-info"
   };
+  return <span className={`badge ${styles[severity]} font-mono`}>{severity}</span>;
+};
 
-  const severityBadge: Record<string, string> = {
-    error: "badge-error",
-    warning: "badge-warning",
-    info: "badge-info",
-  };
+export default function ValidationCenter() {
+  const [activeCategory, setActiveCategory] = useState<ErrorCategory | "All">("All");
+
+  const categories: (ErrorCategory | "All")[] = ["All", "Schema", "Type", "Cross-Layer", "Business Logic"];
+  
+  const filteredErrors = VALIDATION_ERRORS.filter(
+    (err) => activeCategory === "All" || err.category === activeCategory
+  );
+
+  const criticalCount = VALIDATION_ERRORS.filter(e => e.severity === "CRITICAL").length;
+  const errorCount = VALIDATION_ERRORS.filter(e => e.severity === "ERROR").length;
+  const warningCount = VALIDATION_ERRORS.filter(e => e.severity === "WARNING").length;
 
   return (
-    <div className="p-8 max-w-7xl mx-auto">
-      <div className="mb-6 animate-fade-in">
-        <h1 className="text-2xl font-bold text-text">Validation Logs</h1>
-        <p className="text-text-secondary text-sm mt-1">
-          Cross-schema consistency check results
-        </p>
-      </div>
+    <div className="flex flex-col h-screen bg-[#09090B]">
+      
+      {/* Header Summary Bar */}
+      <header className="flex-shrink-0 px-6 py-4 border-b border-border bg-[#111113] flex items-center justify-between">
+        <div>
+          <h1 className="text-lg font-semibold text-text tracking-tight flex items-center gap-2">
+            <ShieldAlert size={18} className="text-error" />
+            Validation Center
+          </h1>
+          <p className="text-xs text-text-muted mt-0.5">CI/CD Architecture Verification Logs</p>
+        </div>
+        
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-error-bg border border-error/20">
+            <AlertOctagon size={14} className="text-error" />
+            <span className="text-xs font-semibold text-error">{criticalCount} Critical</span>
+          </div>
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-error-bg/50 border border-error/20">
+            <AlertCircle size={14} className="text-error/80" />
+            <span className="text-xs font-semibold text-error/80">{errorCount} Errors</span>
+          </div>
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-warning-bg border border-warning/20">
+            <AlertTriangle size={14} className="text-warning" />
+            <span className="text-xs font-semibold text-warning">{warningCount} Warnings</span>
+          </div>
+        </div>
+      </header>
 
-      {/* Compilation Selector */}
-      <div className="glass-card p-4 mb-6 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-        <label className="text-xs font-medium text-text-muted uppercase tracking-wider mb-2 block">
-          Select Compilation
-        </label>
-        <div className="flex flex-wrap gap-2">
-          {compilations.length === 0 ? (
-            <p className="text-sm text-text-muted">No compilations available. Generate one first.</p>
-          ) : (
-            compilations.map((comp) => (
-              <button
-                key={comp.id}
-                onClick={() => loadValidation(comp.id)}
-                className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${
-                  selectedId === comp.id
-                    ? "bg-accent/10 text-accent border border-accent/30"
-                    : "bg-surface-hover text-text-secondary hover:text-text border border-border-light"
-                }`}
+      {/* Main Workspace */}
+      <div className="flex-1 overflow-hidden flex flex-col max-w-5xl w-full mx-auto p-6">
+        
+        {/* Filters */}
+        <div className="flex items-center gap-2 mb-6">
+          <Filter size={14} className="text-text-muted mr-2" />
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors border ${
+                activeCategory === cat
+                  ? "bg-white/10 text-white border-white/20"
+                  : "bg-transparent text-text-secondary border-transparent hover:bg-white/5 hover:text-white"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Log List */}
+        <div className="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-4">
+          <AnimatePresence mode="popLayout">
+            {filteredErrors.map((error, idx) => (
+              <motion.div
+                key={error.id}
+                layout
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.2, delay: idx * 0.05 }}
+                className="panel overflow-hidden border border-border bg-[#131316]"
               >
-                {comp.app_name || comp.id.substring(0, 8)} ({comp.validation_errors} errors)
-              </button>
-            ))
+                {/* Log Header */}
+                <div className="px-4 py-2 border-b border-border/50 bg-[#111113] flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <SeverityBadge severity={error.severity} />
+                    <span className="text-xs font-mono text-text-muted">{error.id}</span>
+                    <span className="text-xs font-medium text-text-secondary px-2 py-0.5 rounded-sm bg-white/5 border border-white/5">
+                      {error.category}
+                    </span>
+                  </div>
+                  <span className="text-[11px] font-mono text-text-muted">{error.timestamp}</span>
+                </div>
+
+                {/* Log Body */}
+                <div className="p-4 flex gap-4">
+                  <div className="pt-0.5">
+                    <SeverityIcon severity={error.severity} />
+                  </div>
+                  <div className="flex-1 space-y-3">
+                    
+                    <div>
+                      <h3 className="text-sm font-medium text-text mb-1">{error.message}</h3>
+                      <div className="flex items-center gap-1.5 text-xs font-mono text-text-muted bg-black/20 p-1.5 rounded-md w-fit border border-white/5">
+                        <FileCode2 size={12} />
+                        {error.file}
+                        {error.line && <span className="text-text-secondary">:{error.line}</span>}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                      <div className="space-y-1.5">
+                        <span className="text-[10px] uppercase tracking-wider text-text-muted font-semibold">Cause</span>
+                        <div className="p-3 bg-error-bg/20 border border-error/10 rounded-md text-xs text-text-secondary leading-relaxed">
+                          {error.cause}
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-1.5">
+                        <span className="text-[10px] uppercase tracking-wider text-text-muted font-semibold">Suggested Repair</span>
+                        <div className="p-3 bg-success-bg/10 border border-success/10 rounded-md text-xs text-text-secondary leading-relaxed flex gap-2">
+                          <Wrench size={14} className="text-success shrink-0 mt-0.5" />
+                          <span>{error.repairAction}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+          
+          {filteredErrors.length === 0 && (
+            <div className="flex flex-col items-center justify-center h-48 text-text-muted">
+              <ShieldCheck size={32} className="mb-2 opacity-50" />
+              <p className="text-sm font-medium">No validation errors found in this category.</p>
+            </div>
           )}
         </div>
-      </div>
 
-      {/* Filter Tabs */}
-      <div className="flex gap-2 mb-4 animate-fade-in" style={{ animationDelay: "0.15s" }}>
-        {[
-          { key: "all", label: `All (${errors.length + warnings.length})` },
-          { key: "errors", label: `Errors (${errors.length})` },
-          { key: "warnings", label: `Warnings (${warnings.length})` },
-        ].map((f) => (
-          <button
-            key={f.key}
-            onClick={() => setFilter(f.key)}
-            className={`px-4 py-2 rounded-lg text-xs font-medium transition-all ${
-              filter === f.key
-                ? "bg-accent/10 text-accent border border-accent/30"
-                : "bg-surface text-text-secondary border border-border-light hover:text-text"
-            }`}
-          >
-            {f.label}
-          </button>
-        ))}
       </div>
-
-      {/* Validation Errors List */}
-      {loading ? (
-        <div className="space-y-3">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="glass-card p-4 shimmer h-24" />
-          ))}
-        </div>
-      ) : filteredErrors.length === 0 ? (
-        <div className="glass-card p-12 text-center">
-          <p className="text-4xl mb-3">✅</p>
-          <p className="text-text-secondary">
-            {selectedId ? "No validation issues found" : "Select a compilation to view validation results"}
-          </p>
-        </div>
-      ) : (
-        <div className="space-y-3">
-          {filteredErrors.map((err, i) => (
-            <div
-              key={err.error_id}
-              className="glass-card p-4 animate-fade-in hover:border-accent/20 transition-all"
-              style={{ animationDelay: `${0.2 + i * 0.03}s` }}
-            >
-              <div className="flex items-start gap-3">
-                <span className={`text-lg ${err.severity === "error" ? "text-error" : "text-warning"}`}>
-                  {severityIcon[err.severity] || "•"}
-                </span>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1 flex-wrap">
-                    <span className={`badge ${severityBadge[err.severity]}`}>{err.error_type}</span>
-                    <code className="text-xs text-text-muted bg-surface-hover px-2 py-0.5 rounded">
-                      {err.location}
-                    </code>
-                  </div>
-                  <p className="text-sm text-text">{err.message}</p>
-                  <p className="text-xs text-accent mt-1">💡 {err.suggestion}</p>
-                  {err.related_locations.length > 0 && (
-                    <div className="flex gap-1 mt-2">
-                      {err.related_locations.map((loc) => (
-                        <code key={loc} className="text-[10px] text-text-muted bg-background px-1.5 py-0.5 rounded">
-                          {loc}
-                        </code>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
