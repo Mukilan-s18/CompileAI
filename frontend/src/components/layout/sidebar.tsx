@@ -19,8 +19,7 @@ import {
   BookOpen,
   Star,
   RefreshCw,
-  Clock,
-  ChevronDown
+  Clock
 } from "lucide-react";
 
 const navGroups = [
@@ -73,10 +72,6 @@ export function Sidebar() {
           <h1 className="text-[13px] font-bold text-text tracking-tight">
             CompileAI
           </h1>
-          <span className="text-[9px] font-semibold text-text-muted bg-white/5 border border-border px-1 py-0.5 rounded-md ml-1">
-            v2.0
-          </span>
-          <ChevronDown size={12} className="text-text-muted ml-auto" />
         </div>
       </div>
 
