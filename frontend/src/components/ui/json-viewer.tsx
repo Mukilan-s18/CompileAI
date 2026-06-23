@@ -4,13 +4,13 @@ import { useState } from "react";
 import { ChevronRight, ChevronDown, Copy, Download, Check, FileCode2 } from "lucide-react";
 
 interface JsonViewerProps {
-  data: any;
+  data: unknown;
   title?: string;
 }
 
-const renderValue = (value: any): React.ReactNode => {
+const renderValue = (value: unknown): React.ReactNode => {
   if (typeof value === "string") {
-    return <span className="text-[#10B981]">"{value}"</span>; // Success color for strings
+    return <span className="text-[#10B981]">&quot;{value}&quot;</span>; // Success color for strings
   }
   if (typeof value === "number") {
     return <span className="text-[#F59E0B]">{value}</span>; // Warning color for numbers
@@ -31,7 +31,7 @@ const JsonNode = ({
   depth = 0,
 }: {
   keyName?: string;
-  value: any;
+  value: unknown;
   isLast: boolean;
   depth?: number;
 }) => {
@@ -45,7 +45,7 @@ const JsonNode = ({
   if (!isObject) {
     return (
       <div className="font-mono text-[13px] leading-relaxed" style={{ paddingLeft: `${depth * 1.5}rem` }}>
-        {keyName && <span className="text-[#FAFAFA]">"{keyName}"</span>}
+        {keyName && <span className="text-[#FAFAFA]">&quot;{keyName}&quot;</span>}
         {keyName && <span className="text-[#A1A1AA]"> : </span>}
         {renderValue(value)}
         {!isLast && <span className="text-[#A1A1AA]">,</span>}
@@ -60,7 +60,7 @@ const JsonNode = ({
   if (isEmpty) {
     return (
       <div className="font-mono text-[13px] leading-relaxed" style={{ paddingLeft: `${depth * 1.5}rem` }}>
-        {keyName && <span className="text-[#FAFAFA]">"{keyName}"</span>}
+        {keyName && <span className="text-[#FAFAFA]">&quot;{keyName}&quot;</span>}
         {keyName && <span className="text-[#A1A1AA]"> : </span>}
         <span className="text-[#A1A1AA]">{bracketOpen}{bracketClose}</span>
         {!isLast && <span className="text-[#A1A1AA]">,</span>}
@@ -80,7 +80,7 @@ const JsonNode = ({
         <span className="text-[#71717A] absolute left-0 flex items-center justify-center w-4 h-4" style={{ left: `calc(${depth * 1.5}rem - 1.25rem)` }}>
           {isExpanded ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
         </span>
-        {keyName && <span className="text-[#FAFAFA]">"{keyName}"</span>}
+        {keyName && <span className="text-[#FAFAFA]">&quot;{keyName}&quot;</span>}
         {keyName && <span className="text-[#A1A1AA]"> : </span>}
         <span className="text-[#A1A1AA]">{bracketOpen}</span>
         {!isExpanded && (
@@ -99,7 +99,7 @@ const JsonNode = ({
         <>
           <div className="flex flex-col">
             {isArray
-              ? (entries as any[]).map((item, index) => (
+              ? (entries as unknown[]).map((item, index) => (
                   <JsonNode
                     key={index}
                     value={item}
@@ -107,7 +107,7 @@ const JsonNode = ({
                     depth={depth + 1}
                   />
                 ))
-              : (entries as [string, any][]).map(([k, v], index) => (
+              : (entries as [string, unknown][]).map(([k, v], index) => (
                   <JsonNode
                     key={k}
                     keyName={k}

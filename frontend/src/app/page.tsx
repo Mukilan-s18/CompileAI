@@ -454,7 +454,7 @@ export default function Home() {
               {/* JSON Viewer */}
               <div className="flex-1 overflow-auto bg-[#0A0A0F] p-4 font-mono text-[13px] leading-relaxed custom-scrollbar border-r border-[#1E2330]">
                 {hasCompiled ? (
-                  <JsonViewerInline data={(MOCK_DATA as any)[activeTab]} />
+                  <JsonViewerInline data={(MOCK_DATA as Record<string, unknown>)[activeTab]} />
                 ) : isCompiling ? (
                   <div className="flex items-center justify-center h-full text-[#475569]">
                     <Loader2 size={20} className="animate-spin text-[#6D5DFB]" />
@@ -606,7 +606,7 @@ export default function Home() {
 }
 
 /* ──────────── Inline JSON Viewer (with line numbers like reference) ──────────── */
-function JsonViewerInline({ data }: { data: any }) {
+function JsonViewerInline({ data }: { data: unknown }) {
   const json = JSON.stringify(data, null, 2);
   const lines = json.split("\n");
 

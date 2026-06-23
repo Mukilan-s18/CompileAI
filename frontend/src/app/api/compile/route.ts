@@ -51,9 +51,9 @@ export async function POST(req: NextRequest) {
     // 4. Response
     return successResponse(mockOutput, 200);
     
-  } catch (error: any) {
+  } catch (error: unknown) {
     // 5. Generic Error Handling (Rule 9: No Stack Traces)
-    console.error("Compilation Error:", error.message || error);
+    console.error("Compilation Error:", error instanceof Error ? error.message : "Unknown error");
     return errorResponse("An internal server error occurred during compilation.", 500);
   }
 }
