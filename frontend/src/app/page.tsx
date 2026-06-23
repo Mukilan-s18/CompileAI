@@ -422,7 +422,7 @@ export default function Home() {
             {/* Tab Bar */}
             <div className="flex items-center justify-between border-b border-[#1E2330] bg-[#0E1015]">
               <div className="flex items-center gap-2.5 overflow-x-auto custom-scrollbar pl-5 pr-4 py-3">
-                {tabs.map((tab) => (
+                {tabs.map((tab, index) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
@@ -430,7 +430,7 @@ export default function Home() {
                       activeTab === tab.id 
                         ? "text-white border-[#6D5DFB] bg-[#6D5DFB]/10" 
                         : "text-[#475569] border-[#1E2330] bg-[#111318] hover:text-[#94A3B8] hover:border-[#475569]/50"
-                    }`}
+                    } ${index === 0 ? "ml-6" : ""}`}
                   >
                     {tab.label}
                   </button>
