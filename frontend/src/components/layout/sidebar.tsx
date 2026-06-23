@@ -12,7 +12,11 @@ import {
   Play, 
   BarChart2, 
   LineChart, 
-  Settings 
+  Settings,
+  LayoutTemplate,
+  FileText,
+  Key,
+  BookOpen
 } from "lucide-react";
 
 const navGroups = [
@@ -22,6 +26,7 @@ const navGroups = [
       { label: "Dashboard", href: "/", icon: <LayoutDashboard size={16} /> },
       { label: "Compiler", href: "/generator", icon: <Terminal size={16} /> },
       { label: "Pipeline", href: "/pipeline", icon: <GitMerge size={16} /> },
+      { label: "Templates", href: "/templates", icon: <LayoutTemplate size={16} /> },
     ]
   },
   {
@@ -37,12 +42,15 @@ const navGroups = [
     items: [
       { label: "Benchmarks", href: "/benchmarks", icon: <BarChart2 size={16} /> },
       { label: "Metrics", href: "/metrics", icon: <LineChart size={16} /> },
+      { label: "Logs", href: "/logs", icon: <FileText size={16} /> },
     ]
   },
   {
     title: "SYSTEM",
     items: [
       { label: "Settings", href: "/settings", icon: <Settings size={16} /> },
+      { label: "API Keys", href: "/keys", icon: <Key size={16} /> },
+      { label: "Documentation", href: "/docs", icon: <BookOpen size={16} /> },
     ]
   }
 ];
