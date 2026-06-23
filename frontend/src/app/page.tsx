@@ -421,16 +421,17 @@ export default function Home() {
           <div className="col-span-8 bg-[#111318] border border-[#1E2330] rounded-xl overflow-hidden flex flex-col">
             {/* Tab Bar */}
             <div className="flex items-center justify-between border-b border-[#1E2330] bg-[#0E1015]">
-              <div className="flex items-center gap-2.5 overflow-x-auto custom-scrollbar pl-5 pr-4 py-3">
-                {tabs.map((tab, index) => (
+              <div className="flex items-center gap-2.5 overflow-x-auto custom-scrollbar py-3">
+                <div className="w-4 shrink-0" /> {/* Explicit spacer to prevent flexbox from collapsing left padding */}
+                {tabs.map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center justify-center px-4 py-1.5 rounded-md text-[11px] font-semibold tracking-wide transition-all border whitespace-nowrap ${
+                    className={`flex items-center justify-center px-4 py-1.5 rounded-md text-[11px] font-semibold tracking-wide transition-all border whitespace-nowrap shrink-0 ${
                       activeTab === tab.id 
                         ? "text-white border-[#6D5DFB] bg-[#6D5DFB]/10" 
                         : "text-[#475569] border-[#1E2330] bg-[#111318] hover:text-[#94A3B8] hover:border-[#475569]/50"
-                    } ${index === 0 ? "ml-6" : ""}`}
+                    }`}
                   >
                     {tab.label}
                   </button>
