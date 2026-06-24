@@ -59,11 +59,11 @@ export function Sidebar() {
       
       <div className="p-6 border-b border-[#1E2330] relative z-10 flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7C6EFB] to-[#5B4AEB] flex items-center justify-center shadow-[0_0_15px_rgba(109,93,251,0.3)] border border-[#6D5DFB]/50">
-            <span className="text-white font-bold text-sm font-mono tracking-tighter">AI</span>
-          </div>
           <div>
             <h2 className="text-[13px] font-bold text-white tracking-tight">Compile</h2>
+          </div>
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7C6EFB] to-[#5B4AEB] flex items-center justify-center shadow-[0_0_15px_rgba(109,93,251,0.3)] border border-[#6D5DFB]/50">
+            <span className="text-white font-bold text-sm font-mono tracking-tighter">AI</span>
           </div>
         </div>
       </div>
