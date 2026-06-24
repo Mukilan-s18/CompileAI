@@ -64,7 +64,6 @@ export function Sidebar() {
           </div>
           <div>
             <h2 className="text-[13px] font-bold text-white tracking-tight">Compile</h2>
-            <p className="text-[9px] text-[#94A3B8] uppercase tracking-widest font-mono">v0.1.0-alpha</p>
           </div>
         </div>
       </div>
