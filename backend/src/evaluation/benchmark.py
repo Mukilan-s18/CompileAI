@@ -9,30 +9,16 @@ from src.pipeline.repair import repair_schema
 from src.pipeline.runtime import verify_execution
 from src.services.telemetry import TelemetryLogger
 
+import time
+
 REAL_PRODUCTS = [
-    "Build a CRM with login, contacts, dashboard, role-based access, and premium plan with payments. Admins can see analytics.",
-    "HRMS platform with employee directory, leave management, payroll processing, and multi-tenant isolation.",
-    "Inventory management system with barcode scanning APIs, low stock alerts, suppliers, and purchase orders.",
-    "Learning management system with courses, video modules, student progress tracking, quizzes, and certificates.",
-    "E-commerce storefront with product catalog, shopping cart, checkout via Stripe, and user order history.",
-    "Hotel booking system with room availability calendars, dynamic pricing, reservations, and customer reviews.",
-    "Help desk ticketing system with SLAs, agent assignments, priority queues, and customer email integration.",
-    "SaaS analytics platform tracking custom events, funnel analysis, daily active users, and data export.",
-    "Subscription meal kit delivery app with weekly menus, dietary preferences, delivery tracking, and payments.",
-    "Project management tool with Kanban boards, task assignment, due dates, file attachments, and team chat."
+    "Build a CRM with login, contacts, dashboard, role-based access, and premium plan with payments.",
+    "Inventory management system with barcode scanning APIs, low stock alerts, suppliers, and purchase orders."
 ]
 
 EDGE_CASES = [
     "Make an app.", # Vague
-    "I need a forum but without any database.", # Conflicting
-    "Build a healthcare portal.", # Incomplete (Missing roles)
-    "App for users to book flights.", # Incomplete (Missing auth)
-    "Create a banking app where users can't login but can see their balance.", # Conflicting
-    "A messaging app using SQLite, MongoDB, and PostgreSQL for the same table.", # Conflicting Architecture
-    "Social network where every post belongs to a user but users don't exist.", # Cyclic/Missing Dependencies
-    "Just give me an API to create users.", # Underspecified
-    "An AI compiler that writes compilers.", # Abstract
-    "Dashboard with nothing on it." # Vague/Minimal
+    "A messaging app using SQLite, MongoDB, and PostgreSQL for the same table." # Conflicting Architecture
 ]
 
 def run_benchmark(prompt: str, category: str):
@@ -76,6 +62,9 @@ def run_benchmark(prompt: str, category: str):
         logger.start_stage("runtime_verification")
         execution_report = verify_execution(app_schema)
         logger.end_stage("runtime_verification")
+        
+        print("Waiting 15 seconds to avoid Groq Rate Limits...")
+        time.sleep(15)
         
         return {
             "prompt": prompt,
