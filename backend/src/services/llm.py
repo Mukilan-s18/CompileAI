@@ -25,6 +25,7 @@ def generate_structured_output(response_model, messages, model=None):
         model=use_model,
         response_model=response_model,
         messages=messages,
+        max_retries=5
     )
 
 def get_mock_response(response_model):
