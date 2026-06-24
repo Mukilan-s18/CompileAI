@@ -131,9 +131,9 @@ export default function SettingsPage() {
                   <div className="space-y-4">
                     <div className="flex items-center justify-between py-3 border-b border-[#1E2330]">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-[#6D5DFB] flex items-center justify-center text-xs font-bold text-white">MK</div>
+                        <div className="w-8 h-8 rounded-full bg-[#6D5DFB] flex items-center justify-center text-xs font-bold text-white">MS</div>
                         <div>
-                          <p className="text-sm font-medium text-white">Mukilan K</p>
+                          <p className="text-sm font-medium text-white">Mukilan S</p>
                           <p className="text-xs text-[#94A3B8]">mukilan@example.com</p>
                         </div>
                       </div>
