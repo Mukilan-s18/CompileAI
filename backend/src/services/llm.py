@@ -1,20 +1,28 @@
 import instructor
 from openai import OpenAI
+from groq import Groq
 from src.config import settings
 
 def get_llm_client():
-    if not settings.OPENAI_API_KEY or settings.OPENAI_API_KEY.startswith("sk-your"):
-        return None
-    return instructor.patch(OpenAI(api_key=settings.OPENAI_API_KEY))
+    if settings.GROQ_API_KEY and not settings.GROQ_API_KEY.startswith("gsk-your"):
+        client = Groq(api_key=settings.GROQ_API_KEY)
+        return instructor.from_groq(client, mode=instructor.Mode.TOOLS), settings.GROQ_MODEL
 
-def generate_structured_output(response_model, messages, model="gpt-4o"):
-    client = get_llm_client()
+    if settings.OPENAI_API_KEY and not settings.OPENAI_API_KEY.startswith("sk-your"):
+        client = OpenAI(api_key=settings.OPENAI_API_KEY)
+        return instructor.from_openai(client), settings.OPENAI_MODEL
+
+    return None, None
+
+def generate_structured_output(response_model, messages, model=None):
+    client, default_model = get_llm_client()
     if not client:
-        print(f"WARN: Mocking LLM response for {response_model.__name__} because OPENAI_API_KEY is not set.")
+        print(f"WARN: Mocking LLM response for {response_model.__name__} because API keys are not set.")
         return get_mock_response(response_model)
         
+    use_model = model or default_model
     return client.chat.completions.create(
-        model=model,
+        model=use_model,
         response_model=response_model,
         messages=messages,
     )
