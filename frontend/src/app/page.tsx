@@ -462,7 +462,7 @@ export default function Home() {
 
     let realData: CompilerOutputs | null = null;
     try {
-      let apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+      let apiUrl = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000").trim();
       if (apiUrl.endsWith('/')) apiUrl = apiUrl.slice(0, -1);
       const res = await fetch(`${apiUrl}/api/compile`, {
         method: 'POST',
@@ -483,7 +483,7 @@ export default function Home() {
       setCompilerData(data.outputs);
     } catch (e: any) {
       console.error(e);
-      let apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+      let apiUrl = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000").trim();
       const errorMsg = e.message || "API Connection Failed";
       addLog("System", "0.0s", `Error: ${errorMsg} (URL: ${apiUrl})`, "text-[#EF4444]");
       setIsCompiling(false);
