@@ -6,9 +6,6 @@
   </p>
 
   <p>
-    <a href="https://github.com/mukilan/CompileAI/actions">
-      <img src="https://github.com/mukilan/CompileAI/actions/workflows/ci.yml/badge.svg" alt="CI Status">
-    </a>
     <a href="https://opensource.org/licenses/MIT">
       <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
     </a>
@@ -17,12 +14,6 @@
     </a>
     <a href="https://nodejs.org/">
       <img src="https://img.shields.io/badge/node-20+-brightgreen.svg" alt="Node.js 20+">
-    </a>
-    <a href="https://github.com/mukilan/CompileAI/issues">
-      <img src="https://img.shields.io/github/issues/mukilan/CompileAI" alt="Issues">
-    </a>
-    <a href="https://github.com/mukilan/CompileAI/stargazers">
-      <img src="https://img.shields.io/github/stars/mukilan/CompileAI" alt="Stars">
     </a>
   </p>
 </div>
