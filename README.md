@@ -6,6 +6,9 @@
   </p>
 
   <p>
+    <a href="https://compile-ai-rho.vercel.app">
+      <img src="https://img.shields.io/badge/Live-Demo-brightgreen.svg" alt="Live Demo">
+    </a>
     <a href="https://opensource.org/licenses/MIT">
       <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
     </a>
@@ -21,6 +24,10 @@
 <hr>
 
 A production-grade AI compiler that processes natural language prompts through a 7-stage pipeline to generate complete application schemas — UI, API, Database, Authentication, Business Logic, and Runtime Configuration — with conflict detection, cross-schema validation, hallucinated field detection, targeted repair, and execution simulation (including real DDL execution against PostgreSQL).
+
+## 🚀 Live Demo
+
+[Experience CompileAI Live](https://compile-ai-rho.vercel.app)
 
 ## 🏗️ Architecture
 
