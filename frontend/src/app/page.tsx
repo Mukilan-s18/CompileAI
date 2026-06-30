@@ -469,13 +469,22 @@ export default function Home() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt })
       });
-      const data: CompilerResponse = await res.json();
-      if (!res.ok) throw new Error((data as unknown as Record<string, unknown>).error as string || "Failed to compile");
+      let data;
+      try {
+        data = await res.json();
+      } catch (jsonErr) {
+        throw new Error(`Failed to parse backend response (Status: ${res.status})`);
+      }
+      
+      if (!res.ok) {
+        throw new Error(data.detail || data.error || `HTTP Error ${res.status}`);
+      }
       realData = data.outputs;
       setCompilerData(data.outputs);
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
-      addLog("System", "0.0s", "API Connection Failed", "text-[#EF4444]");
+      const errorMsg = e.message || "API Connection Failed";
+      addLog("System", "0.0s", `Error: ${errorMsg}`, "text-[#EF4444]");
       setIsCompiling(false);
       return;
     }
