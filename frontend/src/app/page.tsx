@@ -472,7 +472,7 @@ export default function Home() {
       let data;
       try {
         data = await res.json();
-      } catch (jsonErr) {
+      } catch {
         throw new Error(`Failed to parse backend response (Status: ${res.status})`);
       }
       
@@ -481,10 +481,10 @@ export default function Home() {
       }
       realData = data.outputs;
       setCompilerData(data.outputs);
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error(e);
-      let apiUrl = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000").trim();
-      const errorMsg = e.message || "API Connection Failed";
+      const apiUrl = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000").trim();
+      const errorMsg = e instanceof Error ? e.message : "API Connection Failed";
       addLog("System", "0.0s", `Error: ${errorMsg} (URL: ${apiUrl})`, "text-[#EF4444]");
       setIsCompiling(false);
       return;
