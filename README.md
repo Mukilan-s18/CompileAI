@@ -1,80 +1,81 @@
-# AI Application Compiler
+<div align="center">
+  <h1>🤖 AI Application Compiler</h1>
 
-> **Convert natural language product requirements into validated, executable application specifications.**
+  <p>
+    <strong>Convert natural language product requirements into validated, executable application specifications.</strong>
+  </p>
+
+  <p>
+    <a href="https://github.com/mukilan/CompileAI/actions">
+      <img src="https://github.com/mukilan/CompileAI/actions/workflows/ci.yml/badge.svg" alt="CI Status">
+    </a>
+    <a href="https://opensource.org/licenses/MIT">
+      <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
+    </a>
+    <a href="https://www.python.org/">
+      <img src="https://img.shields.io/badge/python-3.9+-blue.svg" alt="Python 3.9+">
+    </a>
+    <a href="https://nodejs.org/">
+      <img src="https://img.shields.io/badge/node-20+-brightgreen.svg" alt="Node.js 20+">
+    </a>
+    <a href="https://github.com/mukilan/CompileAI/issues">
+      <img src="https://img.shields.io/github/issues/mukilan/CompileAI" alt="Issues">
+    </a>
+    <a href="https://github.com/mukilan/CompileAI/stargazers">
+      <img src="https://img.shields.io/github/stars/mukilan/CompileAI" alt="Stars">
+    </a>
+  </p>
+</div>
+
+<hr>
 
 A production-grade AI compiler that processes natural language prompts through a 7-stage pipeline to generate complete application schemas — UI, API, Database, Authentication, Business Logic, and Runtime Configuration — with conflict detection, cross-schema validation, hallucinated field detection, targeted repair, and execution simulation (including real DDL execution against PostgreSQL).
 
----
+## 🏗️ Architecture
 
-## Architecture
-
-```
-Natural Language Input
-        ↓
-┌─────────────────────────────────────────────────────┐
-│               AI APPLICATION COMPILER               │
-├─────────────────────────────────────────────────────┤
-│                                                     │
-│  Stage 0: Conflict Detection (Pre-pipeline)         │
-│  ├── Contradiction detection (regex-based)          │
-│  ├── Ambiguity & vagueness scoring                  │
-│  ├── Underspecification detection                   │
-│  └── Auto-assumption generation                     │
-│                          ↓                          │
-│  Stage 1: Intent Extraction                         │
-│  ├── NL → Structured IntentModel (Pydantic)         │
-│  ├── Feature categorization                         │
-│  └── Assumption generation for vague prompts        │
-│                          ↓                          │
-│  Stage 2: System Design                             │
-│  ├── Entities + Relationships                       │
-│  ├── User Flows + Permissions                       │
-│  └── Business Rules                                 │
-│                          ↓                          │
-│  Stage 3: Schema Generation                         │
-│  ├── UI Schema (Pages, Forms, Tables, Nav)          │
-│  ├── API Schema (Endpoints, Request/Response)       │
-│  ├── DB Schema (Tables, Columns, FK, Indexes)       │
-│  ├── Auth Schema (RBAC, Route Guards, Premium)      │
-│  ├── Business Logic (Rules, Workflows)              │
-│  └── Runtime Config (Server, DB, Cache, Flags)      │
-│                          ↓                          │
-│  Stage 4: Validation Engine                         │
-│  ├── Cross-schema reference integrity               │
-│  ├── Foreign key validation                         │
-│  ├── Role/permission consistency                    │
-│  ├── Hallucinated field detection                   │
-│  └── Feature completeness checks                    │
-│                          ↓                          │
-│  Stage 5: Repair Engine                             │
-│  ├── Targeted repairs (not full regen)              │
-│  ├── Dependency-aware cascading                     │
-│  └── Max 3 repair iterations                        │
-│                          ↓                          │
-│  Stage 6: Execution Simulator                       │
-│  ├── Route generation verification                  │
-│  ├── SQL DDL generation + real Postgres execution   │
-│  ├── Auth guard validation                          │
-│  └── Cross-reference dependency check               │
-│                                                     │
-└─────────────────────────────────────────────────────┘
-        ↓
-Executable Configuration (JSON)
+```mermaid
+flowchart TD
+    NL["Natural Language Input"] --> Stage0
+    
+    subgraph AI Application Compiler
+        direction TB
+        Stage0["Stage 0: Conflict Detection<br>(Pre-pipeline)<br>• Contradictions<br>• Ambiguity scoring<br>• Underspecification<br>• Auto-assumptions"]
+        Stage1["Stage 1: Intent Extraction<br>• Structured IntentModel<br>• Feature categorization"]
+        Stage2["Stage 2: System Design<br>• Entities + Relationships<br>• User Flows + Permissions<br>• Business Rules"]
+        Stage3["Stage 3: Schema Generation<br>• UI, API, DB, Auth<br>• Business Logic, Config"]
+        Stage4["Stage 4: Validation Engine<br>• Cross-schema integrity<br>• Hallucinated field detection<br>• Feature completeness"]
+        Stage5["Stage 5: Repair Engine<br>• Targeted repairs<br>• Dependency-aware cascading"]
+        Stage6["Stage 6: Execution Simulator<br>• Route verification<br>• SQL DDL execution<br>• Cross-reference check"]
+        
+        Stage0 --> Stage1
+        Stage1 --> Stage2
+        Stage2 --> Stage3
+        Stage3 --> Stage4
+        Stage4 --> Stage5
+        Stage5 --> Stage6
+    end
+    
+    Stage6 --> JSON["Executable Configuration (JSON)"]
+    
+    classDef default fill:#1e1e1e,stroke:#333,stroke-width:2px,color:#fff;
+    classDef highlight fill:#2563eb,stroke:#333,stroke-width:2px,color:#fff;
+    class Stage0,Stage1,Stage2,Stage3,Stage4,Stage5,Stage6 default;
+    class NL,JSON highlight;
 ```
 
-## Tech Stack
+## 💻 Tech Stack
 
 | Layer | Technology |
 |---|---|
-| Frontend | Next.js 15, TypeScript, TailwindCSS, Shadcn UI, Recharts |
-| Backend | FastAPI, Python 3.9+ |
-| AI | OpenAI API, Instructor, Pydantic (Structured Output) |
-| Validation | Pydantic, JSON Schema, Rule-Based Engine |
-| Database | PostgreSQL |
-| Metrics | Prometheus-compatible |
-| Deployment | Docker, Docker Compose |
+| **Frontend** | Next.js 15, TypeScript, TailwindCSS, Shadcn UI, Recharts |
+| **Backend** | FastAPI, Python 3.9+ |
+| **AI** | OpenAI API, Instructor, Pydantic (Structured Output) |
+| **Validation** | Pydantic, JSON Schema, Rule-Based Engine |
+| **Database** | PostgreSQL |
+| **Metrics** | Prometheus-compatible |
+| **Deployment** | Docker, Docker Compose |
 
-## Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
 
@@ -117,35 +118,36 @@ Visit:
 - **Backend API**: http://localhost:8000/docs
 - **API Docs**: http://localhost:8000/redoc
 
-## API Endpoints
+## 📡 API Endpoints
 
 | Method | Endpoint | Description |
 |---|---|---|
-| POST | `/api/generate` | Run full compilation pipeline |
-| POST | `/api/clarify` | Analyze prompt for conflicts/ambiguity |
-| POST | `/api/validate` | Re-validate existing compilation |
-| POST | `/api/repair` | Run targeted repairs |
-| POST | `/api/simulate` | Run execution simulation |
-| GET | `/api/metrics` | Aggregate metrics |
-| GET | `/api/cost-analysis` | Cost vs quality tradeoff analysis |
-| GET | `/api/compilations` | List all compilations |
-| GET | `/api/compilations/{id}` | Get specific compilation |
-| POST | `/api/benchmarks/run` | Run benchmark suite |
-| GET | `/api/benchmarks` | Get latest benchmark results |
+| `POST` | `/api/generate` | Run full compilation pipeline |
+| `POST` | `/api/clarify` | Analyze prompt for conflicts/ambiguity |
+| `POST` | `/api/validate` | Re-validate existing compilation |
+| `POST` | `/api/repair` | Run targeted repairs |
+| `POST` | `/api/simulate` | Run execution simulation |
+| `GET` | `/api/metrics` | Aggregate metrics |
+| `GET` | `/api/cost-analysis` | Cost vs quality tradeoff analysis |
+| `GET` | `/api/compilations` | List all compilations |
+| `GET` | `/api/compilations/{id}` | Get specific compilation |
+| `POST` | `/api/benchmarks/run` | Run benchmark suite |
+| `GET` | `/api/benchmarks` | Get latest benchmark results |
 
-## Project Structure
+## 📁 Project Structure
 
-```
+```text
+CompileAI/
 ├── backend/
 │   ├── src/
 │   │   ├── pipeline/          # 7-stage compiler pipeline
-│   │   │   ├── conflict_detector.py  # Stage 0: Prompt analysis
+│   │   │   ├── conflict_detector.py
 │   │   │   ├── intent_extractor.py
 │   │   │   ├── system_designer.py
 │   │   │   ├── schema_generator.py
-│   │   │   ├── validator.py          # + Hallucinated field detection
+│   │   │   ├── validator.py
 │   │   │   ├── repair_engine.py
-│   │   │   └── execution_simulator.py # + Real DDL execution
+│   │   │   └── execution_simulator.py
 │   │   ├── schemas/           # Pydantic models (12 files)
 │   │   ├── services/          # LLM + Compiler orchestration
 │   │   ├── evaluation/        # Metrics + Benchmarks + Cost Analysis
@@ -163,7 +165,7 @@ Visit:
 └── docker-compose.yml
 ```
 
-## Deterministic Behavior
+## ⚙️ Deterministic Behavior
 
 The compiler is designed for deterministic output:
 
@@ -174,7 +176,7 @@ The compiler is designed for deterministic output:
 
 Same input → Consistent output.
 
-## Evaluation Framework
+## 📊 Evaluation Framework
 
 ### Benchmark Suite
 
@@ -190,7 +192,7 @@ Same input → Consistent output.
 - Average Latency
 - Token Usage
 
-## Testing
+## 🧪 Testing
 
 ```bash
 cd backend
@@ -208,29 +210,21 @@ Tests cover:
 
 **55 tests total, all passing.**
 
-## Cost vs Quality Tradeoff
+## 💰 Cost vs Quality Tradeoff
 
 The compiler supports multiple LLM models with different cost/quality profiles:
 
 | Model | Cost/Compile | Tokens | Latency | Quality |
 |---|---|---|---|---|
-| **GPT-4o** | ~$0.049 | 14,900 | ~12s | 95% |
+| **GPT-4o** ✅ | ~$0.049 | 14,900 | ~12s | 95% |
 | GPT-4o-mini | ~$0.005 | 14,900 | ~4s | 82% |
 | GPT-4.1-nano | ~$0.004 | 14,900 | ~2.5s | 70% |
 
-### Design Decision
-
-We chose **GPT-4o as the default** because:
-1. **Compiler correctness is paramount** — lower-quality models produce more validation errors, requiring more repair iterations
-2. **Validation + Repair is free** — Stages 4-6 are rule-based (zero LLM cost), so repair iterations only add milliseconds
-3. **At ~$0.05/compilation**, GPT-4o is cost-effective for production use
-4. **Higher base quality → fewer repair iterations → more predictable output**
-
-For cost-sensitive use cases, GPT-4o-mini provides 82% quality at 90% lower cost.
+> **Design Decision:** We chose **GPT-4o as the default** because compiler correctness is paramount. Lower-quality models produce more validation errors, requiring more repair iterations. Validation and repair are rule-based (zero LLM cost), but higher base quality results in fewer repair iterations and more predictable output. At ~$0.05/compilation, GPT-4o is cost-effective for production use.
 
 Access full analysis at `GET /api/cost-analysis`.
 
-## Failure Handling
+## 🛡️ Failure Handling
 
 | Failure Type | How It's Handled |
 |---|---|
@@ -246,6 +240,11 @@ Access full analysis at `GET /api/cost-analysis`.
 
 Call `POST /api/clarify` before `POST /api/generate` to analyze prompt quality.
 
-## License
+## 📄 License
 
-MIT
+This project is licensed under the MIT License.
+
+---
+<div align="center">
+  Crafted with ❤️ by <a href="https://github.com/mukilan">Mukilan</a>
+</div>
