@@ -244,7 +244,3 @@ Call `POST /api/clarify` before `POST /api/generate` to analyze prompt quality.
 
 This project is licensed under the MIT License.
 
----
-<div align="center">
-  Crafted with ❤️ by <a href="https://github.com/mukilan">Mukilan</a>
-</div>
