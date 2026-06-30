@@ -462,7 +462,8 @@ export default function Home() {
 
     let realData: CompilerOutputs | null = null;
     try {
-      const res = await fetch('/api/compile', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+      const res = await fetch(`${apiUrl}/api/compile`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt })
