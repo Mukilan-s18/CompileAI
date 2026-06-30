@@ -483,8 +483,9 @@ export default function Home() {
       setCompilerData(data.outputs);
     } catch (e: any) {
       console.error(e);
+      let apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
       const errorMsg = e.message || "API Connection Failed";
-      addLog("System", "0.0s", `Error: ${errorMsg}`, "text-[#EF4444]");
+      addLog("System", "0.0s", `Error: ${errorMsg} (URL: ${apiUrl})`, "text-[#EF4444]");
       setIsCompiling(false);
       return;
     }
